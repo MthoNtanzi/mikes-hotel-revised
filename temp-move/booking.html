@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+    <title>Mike'S Hotel</title>
+</head>
+<body>
+    <header>
+        <a href="index.html"><img src="img/Logo.svg" alt="Mike's hotel logo" id="logoImg"></a>
+        <ul class="menu">
+            <li class="navbar"><a href="rooms.html">Rooms</a></li>
+            <li class="navbar"><a href="booking.html">Booking</a></li>
+            <li class="navbar"><a href="about.html">About</a></li>
+        </ul>
+    </header>
+    <main id="booking-main">
+        
+            <!-- Beginning of Booking Form -->
+            <form id="bookingForm" class="form">
+                <h2>Book your room</h2>
+                <div>
+                    <label for="username">Please Enter your Name:</label><br><br>
+                    <input type="text" name="username" placeholder="Name">
+                </div>
+                <div>
+                    <label for="useremail">Please enter your email address:</label><br><br>
+                    <input type="email" name="useremail" placeholder="Email Address">
+                </div>
+                <div>
+                    <label for="room">Book your room:</label><br><br>
+                    <select name="room" id="selectedRoom">
+                        <option selected>Please choose a room</option>
+                        <option value="singleRoom">Single Bedroom</option>
+                        <option value="sharingRoom">Sharing Bedroom</option>
+                        <option value="luxSuite">Luxury Suite</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="arrivalDate">When are you planning to visit</label><br><br>
+                    <input type="date" name="arrivalDate" id="arrivalDate">
+                </div>
+                <div>
+                    <label for="">How many nights are you staying</label><br><br>
+                    <input type="range" oninput="range()" name="numofDays" id="valueRange" step="1" min="1" max="10" value="1">
+                    <input type="text" id="valueRangeTxtBx" readonly><!-- TODO INCLUDE VALUE OF RANGE FIELD -->
+                </div>
+                <div>
+                    <legend>How many adults are visiting</legend>
+                    <select name="adultsSelect" id="adultsSelect">
+                        <option selected value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+                <div>
+                    <legend>How many children are visiting</legend>
+                    <select name="kidsSelect" id="kidsSelect">
+                        <option selected value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                    </select>
+                </div>
+                <input type="submit" onclick="calculate()" value="Confirm" id="submit">
+            </form>
+            <!-- End of Booking Form -->
+    </main>
+    <footer>
+        <footer>
+        <div id="box2" class="flexboxes">
+            <p>Tel: 0123456789</p>
+            <p>Email: admin@email.com</p>
+            <p>Reservations: <a href="booking.html">click here</a></p>
+        </div>
+        <div id="box3" class="flexboxes">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14315.157469745152!2d28.0131667!3d-26.2360327!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95092fa45b4141%3A0xb6c992120ae67baf!2sGold%20Reef%20City%20Theme%20Park!5e0!3m2!1sen!2sza!4v1676360912414!5m2!1sen!2sza" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <div id="box1" class="flexboxes">
+            <p>Copyright Reserved &#169 Made by Mtho</p>
+        </div>
+    </footer>
+</body>
+</html>
