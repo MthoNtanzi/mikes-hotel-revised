@@ -42,9 +42,9 @@ function HomePage() {
                 {chunkedImages.map((row, rowIndex) => (
                     <div className='row' key={rowIndex}>
                         {row.map((src, index) => (
-                                <div class="col-lg-4 col-12 mb-4 d-flex justify-content-center" key={index}>
+                                <div class="col-lg-4 col-12 mb-4 d-flex justify-content-center image-container" key={index}>
                                 <img
-                                    className='img-fluid rounded'
+                                    className='img-fluid rounded hover-grow'
                                     alt={`Hotel lobby ${rowIndex * 3 + index + 1}`}
                                     height='200' width='250' src={src} />
                                 </div>
