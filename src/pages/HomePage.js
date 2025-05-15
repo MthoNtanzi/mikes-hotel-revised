@@ -1,6 +1,7 @@
 import React from 'react';
 import '../assets/styles/HomePage.css';
-import introVid from '../assets/videos/intro_video.mp4';
+// import introVid from '../assets/videos/intro_video.mp4';
+import introScene from '../assets/videos/intro_scene.mp4';
 import entranceImg from '../assets/images/entrance_img.jpg';
 
 function HomePage() {
@@ -22,12 +23,12 @@ function HomePage() {
 
             {/* Intro video */}
             <video className='introVid' autoPlay loop muted>
-                <source src={introVid} type="video/mp4" />
+                <source src={introScene} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
             <div className='card_and_info'>
                 <div className='card aboutUsCard py-4'>
-                    <p className='h3 mb-6'>Comfortable rooms for everyone!</p>
+                    <p className='h3 mb-6'>Comfortable rooms for you!</p>
                     <button className='btn btn-outline-dark w-50 mx-auto p-2'>Check availabilty</button>
                 </div>
                 <div className='px-5'>

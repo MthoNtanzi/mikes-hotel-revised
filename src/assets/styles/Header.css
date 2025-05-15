@@ -1,0 +1,25 @@
+/* .navbar Link{
+    color: black;
+    font-weight:lighter;
+    letter-spacing: 1px;
+
+}
+
+#logoImg{
+    width: 250px;
+    height: 100px;
+    padding: 0.5rem;
+}
+.menu {
+    display: flex;
+    align-self: flex-end;
+}
+.menu>li{
+    list-style-type: none;
+    padding: 1.5rem;
+}
+
+.menu>li>Link{
+    text-decoration: none;
+    font-size: 2rem;
+} */

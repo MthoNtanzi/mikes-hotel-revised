@@ -1,25 +1,33 @@
 import { Link } from 'react-router-dom';
 import { React } from "react";
+import '../assets/styles/Footer.css';
 
 function Footer(){
     return (
-      <footer className="d-md-flex flex-column">
-        <div className='left_footer_box'>
-            <p>Tel: 0123456789</p>
-            <p>Email: admin@email.com</p>
-            <p>Reservations: <Link to="booking.html">click here</Link></p>
+      <footer className="footer">
+        <div className='top_box'>
+            <div className='left_footer_box footer_box'>
+              <h2>Mike's Hotel</h2>
+              <div>
+                <Link to="#" className='btn btn-outline-light socials_buttons me-2'>Twitter</Link>
+                <Link to="#" className='btn btn-outline-light socials_buttons me-2'>Instagram</Link>
+                <Link to="#" className='btn btn-outline-light socials_buttons me-2'>Youtube</Link>
+                <Link to="#" className='btn btn-outline-light socials_buttons'>Facebook</Link>
+              </div>
+            </div>
+            <div className='right_footer_box footer_box'>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pretium enim nisl, vel elementum ex pellentesque vel. Donec quis est viverra, molestie mauris vitae, faucibus sem. Ut vel nibh congue, facilisis justo ut, ullamcorper nunc.
+              </p>
+              <button className='btn btn-light all_offers_btn'>See all Offers</button>
+            </div>
+            
         </div>
-        <div className='center_footer_box'>
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3578.0768961818985!2d28.312376439571384!3d-26.259167615441118!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e952291c13740db%3A0x875fadc73272af5b!2sBig%20Top%20Arena%20Carnival%20City!5e0!3m2!1sen!2sza!4v1746775418634!5m2!1sen!2sza" 
-            width="400" 
-            height="300" 
-            style={{ border: 0 }} 
-            allowfullscreen="" 
-            loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <div className='right_footer_box'>
-            <p>Copyright Reserved &#169 Made by Mtho</p>
+        
+        <div className='bottom_box'>
+            <p><Link to="#" className='myLink text-white'>Terms and conditions</Link></p>
+            <p className='text-white'>Copyright Reserved &copy; Made by Mtho</p>
+            <p><Link to="#" className='myLink text-white'>Cookies Policy</Link></p>
         </div>
       </footer>  
     );

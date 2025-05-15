@@ -5,10 +5,10 @@
 
 .introVid{
     width: 100%;
-
-    /* position: absolute;
-    top: -200px;
-    left: 0; */
+    height: 90vh;
+    object-fit: cover;
+    z-index: -1;
+    background-color: #ddd;
 }
 
 .aboutUsCard{

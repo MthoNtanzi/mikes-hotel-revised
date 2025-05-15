@@ -1,3 +1,62 @@
-footer{
+.footer{
     background-color: #303030;
+    color: #fff;
+    padding: 20px;
 }
+
+
+.top_box, .bottom_box{
+    display: flex;
+    width: 100%;
+}
+
+/* ==========  Top  footer  ========== */
+.footer_box{
+    flex: 1; /* make both boxes equal width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* font-size: 24px; */
+    color: white;
+    margin-bottom: 110px;
+}
+
+
+/* ========= Right Footer ========= */
+
+.all_offers_btn{
+    margin-top: 20px;
+    border-radius: 40px;
+}
+
+.right_footer_box{
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* ========= Left Footer ========= */
+
+.left_footer_box{
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.socials_buttons{
+    border-radius: 40px;
+    width: 95px;
+}
+
+
+/* ==========  Bottom  footer / Polices and copyright  ========== */
+
+.bottom_box{
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+
+/* ========= Links ========= */
+.myLink{
+    text-decoration: none;
+}
+
