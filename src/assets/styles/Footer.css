@@ -32,6 +32,9 @@
 .right_footer_box{
     flex-direction: column;
     align-items: flex-start;
+    p{
+        text-align: left;
+    }
 }
 
 /* ========= Left Footer ========= */
@@ -39,6 +42,11 @@
 .left_footer_box{
     flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-start;
+
+    h2{
+        margin-bottom: 45px;
+    }
 }
 
 .socials_buttons{
@@ -60,3 +68,47 @@
     text-decoration: none;
 }
 
+
+/* ============= Footer ============= */
+@media (max-width: 768px) {
+    .top_box, .bottom_box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer_box {
+        margin-bottom: 50px;
+    }
+
+    .right_footer_box, .left_footer_box {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .bottom_box {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 500px) {
+    .socials_buttons {
+        width: 70px;
+    }
+
+    .all_offers_btn {
+        width: 80%;
+    }
+
+    .left_footer_box h2 {
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+    }
+
+    .bottom_box {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
