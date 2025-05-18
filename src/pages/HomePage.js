@@ -2,7 +2,6 @@ import React from 'react';
 import '../assets/styles/HomePage.css';
 // import introVid from '../assets/videos/intro_video.mp4';
 import introScene from '../assets/videos/intro_scene.mp4';
-import entranceImg from '../assets/images/entrance_img.jpg';
 
 function HomePage() {
 

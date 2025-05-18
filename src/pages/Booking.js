@@ -1,39 +1,23 @@
-function Booking() {
-    const roomsJson = {
-        "rooms": {
-            "room1": {
-                "roomName": "Presidential Suite",
-                "roomPrice": 5500,
-                "roomImages": [
-                        "",
-                        "",
-                        "",
-                    ]
-            },
-            "room2":{
-                "roomName": "Single Room",
-                "roomPrice": 2000,
-                "roomImages": [
-                        "https://images.pexels.com/photos/8142976/pexels-photo-8142976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                        "https://images.pexels.com/photos/8142972/pexels-photo-8142972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-                        "https://images.pexels.com/photos/8142977/pexels-photo-8142977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                    ]
-            },
-            "room3":{
-                "roomName": "Double Room",
-                "roomPrice": 3500,
-                "roomImages": [
-                    "",
-                    "",
-                    ""
-                ]
-            }
-        }
-    }
+import { useLocation } from 'react-router-dom';
+import '../assets/styles/Booking.css';
 
-    return(
-        <h1>Booking Page</h1>
-    )
+function Booking() {
+    const location = useLocation();
+    const room = location.state;
+
+    if (!room) return <p>No room data provided.</p>;
+
+    return (
+        <>
+            <div className='bookingDetails'>
+                <h1>{room.roomName}</h1>
+                <p>{room.roomDetails}</p>
+                <img src={room.roomImages[0]} alt={room.roomName} />
+                <p>Price: R{room.roomPrice}</p>
+                {/* Render other details like amenities etc */}
+            </div>    
+        </>  
+    );
 }
 
 export default Booking;
