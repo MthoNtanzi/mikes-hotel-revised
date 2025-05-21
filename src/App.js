@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import './assets/fontawesome'; 
 import HomePage from './pages/HomePage';
 import Booking from "./pages/Booking";
 import Rooms from "./pages/Rooms";
