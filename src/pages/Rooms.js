@@ -76,7 +76,7 @@ function Rooms() {
     return (
         <>
             <div className="roomTitle">
-                <h1>Explore Our offerings</h1>
+                <h1>Explore Our Offers</h1>
                 <p>At Mike's hotel we pride ourselves by having the best rooms for you and your loved ones. Whether you here for business or pleasure we have you covered, so browse over our offerings below and come visit us when you are ready, we'll be waiting for you!</p>
             </div>
             {/* Rooms */}

@@ -14,6 +14,17 @@ function Booking() {
     const room = location.state;
     const navigate = useNavigate();
 
+    const [images, setImages] = useState(room.roomImages);
+
+    const handleImageClick = (index) => {
+        if (index === 0) return; // already in position 1
+
+        const newImages = [...images];
+        const [selectedImage] = newImages.splice(index, 1); // remove clicked image
+        newImages.unshift(selectedImage); // add it to the front
+        setImages(newImages);
+    };
+
     const [showCalendar, setShowCalendar] = useState(false);
     const [selection, setSelection] = useState([
         {
@@ -44,57 +55,70 @@ function Booking() {
 
     return (
         <>
+            <div className="bookingTitle">
+                <h1>Explore Our Offers</h1>
+                <p>At Mike's hotel we pride ourselves by having the best rooms for you and your loved ones. Whether you here for business or pleasure we have you covered, so browse over our offerings below and come visit us when you are ready, we'll be waiting for you!</p>
+            </div>
             <h1>Bookings</h1>
             <div className='roomDetails card p-2'>
 
                 {/* Rooms */}
                 <div className="roomImages">
-                    <img className='roomImg1' src={room.roomImages[0]} alt={room.roomName} />
-                    <img className='roomImg2' src={room.roomImages[1]} alt={room.roomName} />
-                    <img className='roomImg3' src={room.roomImages[2]} alt={room.roomName} />
-                </div>
+            {images.map((img, idx) => (
+                <img
+                    key={idx}
+                    src={img}
+                    alt={room.roomName}
+                    className={`roomImg${idx + 1}`}
+                    onClick={() => handleImageClick(idx)}
+                    style={{ cursor: 'pointer' }}
+                />
+            ))}
+        </div>
 
                 {/* Rooms, descriptions, amenities and details */}
-                {/* Rooms, descriptions and amenities */}
-                <div>
-                    {/* Room and description */}
-                    <div>
-                        <h1>{room.roomName}</h1>
-                        <p>{room.roomDetails}</p>
-                        <p>Price: R{room.roomPrice}</p>
-                    </div>
-
-                    {/* Amenities */}
-                    <div className='card my-3'>
-                        <h4 className='card-title pt-3 display-6'>Amenities</h4>
-                        <hr />
-                        <ul className="list-none pl-0 space-y-2 amenity_list">
-                            {Object.entries(room.amenities)
-                                .filter(([_, count]) => count > 0)
-                                .map(([amenity, count]) => (
-                                    <li key={amenity} className="flex items-center gap-2">
-                                        <FontAwesomeIcon icon={amenityIcons[amenity]} className="text-blue-600" />
-                                        <span> {amenity}</span>
-                                        <span className="text-sm text-gray-600 font-semibold">: {count}</span>
-                                    </li>
-                                ))}
-                        </ul>
-                    </div>
-                    {/* Hotel information */}
-                    <div className="card my-3">
-                        <h4 className='card-title pt-3 display-6'>Hotel Information</h4>
-                        <hr />
-                        <div className='d-flex flex-row justify-content-center gap-4 flex-wrap text-center'>
-                            <p><FontAwesomeIcon icon={faClock} /> Check In : 3:00 pm</p>
-                            <p><FontAwesomeIcon icon={faClock} /> Check Out : 12:00 pm</p>
-                            <p><FontAwesomeIcon icon={faCircleExclamation} /> Minimum Age to Check In : 18</p>
+                <div className='room_desc_amenities_bookings'>
+                    {/* Rooms, descriptions and amenities */}
+                    <div className='room_desc'>
+                        {/* Room and description */}
+                        <div>
+                            <h1>{room.roomName}</h1>
+                            <p>{room.roomDetails}</p>
                         </div>
 
+                        {/* Amenities */}
+                        <div className='card my-3'>
+                            <h4 className='card-title pt-3 display-6'>Amenities</h4>
+                            <hr />
+                            <ul className="list-none pl-0 space-y-2 amenity_list">
+                                {Object.entries(room.amenities)
+                                    .filter(([_, count]) => count > 0)
+                                    .map(([amenity, count]) => (
+                                        <li key={amenity} className="flex items-center gap-2">
+                                            <FontAwesomeIcon icon={amenityIcons[amenity]} className="text-blue-600" />
+                                            <span> {amenity}</span>
+                                            <span className="text-sm text-gray-600 font-semibold">: {count}</span>
+                                        </li>
+                                    ))}
+                            </ul>
+                        </div>
+                        {/* Hotel information */}
+                        <div className="card my-3">
+                            <h4 className='card-title pt-3 display-6'>Hotel Information</h4>
+                            <hr />
+                            <div className='d-flex flex-row justify-content-center gap-4 flex-wrap text-center'>
+                                <p><FontAwesomeIcon icon={faClock} /> Check In : 3:00 pm</p>
+                                <p><FontAwesomeIcon icon={faClock} /> Check Out : 12:00 pm</p>
+                                <p><FontAwesomeIcon icon={faCircleExclamation} /> Minimum Age to Check In : 18</p>
+                            </div>
 
+
+                        </div>
                     </div>
+                    {/* End of Rooms, descriptions and amenities */}
 
-                    {/* Booking Section */}
-                    <div className='card'>
+                    {/*  Start of Booking Section */}
+                    <div className='card p-1 booking_section'>
                         <h6 className='display-6'>Details</h6>
                         <hr />
                         {/* Book Dates */}
@@ -122,17 +146,21 @@ function Booking() {
                             </div>
                         </div>
                         {/* Reserve date */}
-                        <div className='card'>
-                            <div>
-                                <p>Pricing</p>
-                                <p>R{room.roomPrice}/night</p>
-                            </div>
-                            <button className='btn btn-dark'>Pricing</button>
+                        <hr/>
+                        <div>
+                            <p>Pricing</p>
+                            <p>R{room.roomPrice}/night</p>
                         </div>
-
+                        <button className='btn btn-dark mt-2'>Pricing</button>
+                        {/* End of Reserve date */}
 
                     </div>
+
+                    {/*  End of Booking Section */}
                 </div>
+
+                {/* End of Rooms, descriptions, amenities and details */}
+
             </div>
         </>
     );
