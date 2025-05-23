@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DateRange } from 'react-date-range';
-import { format } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { enUS } from 'date-fns/locale';
 import 'react-date-range/dist/styles.css'; // main css
 import 'react-date-range/dist/theme/default.css'; // theme css
@@ -34,6 +34,16 @@ function Booking() {
         }
     ]);
 
+    if (!room) return <>
+        <p>No room data provided.</p>
+    </>;
+
+    // Calculate the number of days
+    const numberOfDays = differenceInDays(selection[0].endDate, selection[0].startDate);
+
+    // Ensure at least 1 day if start and end dates are the same (for single-night stays)
+    const effectiveNumberOfDays = numberOfDays === 0 ? 1 : numberOfDays;
+
     const handleSelect = (ranges) => {
         setSelection([ranges.selection]);
     };
@@ -49,32 +59,29 @@ function Booking() {
         "Air Conditioner": faSnowflake
     };
 
-    if (!room) return <>
-        <p>No room data provided.</p>
-    </>;
-
     return (
         <>
             <div className="bookingTitle">
-                <h1>Explore Our Offers</h1>
-                <p>At Mike's hotel we pride ourselves by having the best rooms for you and your loved ones. Whether you here for business or pleasure we have you covered, so browse over our offerings below and come visit us when you are ready, we'll be waiting for you!</p>
+                <h1>Book your Stay</h1>
+                <p>You have chosen to stay in the {room.roomName}. View the room offerings and amenities and book your stay.</p>
             </div>
             <h1>Bookings</h1>
             <div className='roomDetails card p-2'>
 
                 {/* Rooms */}
                 <div className="roomImages">
-            {images.map((img, idx) => (
-                <img
-                    key={idx}
-                    src={img}
-                    alt={room.roomName}
-                    className={`roomImg${idx + 1}`}
-                    onClick={() => handleImageClick(idx)}
-                    style={{ cursor: 'pointer' }}
-                />
-            ))}
-        </div>
+                    {images.map((img, idx) => (
+                        <img
+                            key={idx}
+                            src={img}
+                            alt={room.roomName}
+                            className={`roomImg${idx + 1}`}
+                            onClick={() => handleImageClick(idx)}
+                            // onError={(e) => e.target.src = '/fallback.jpg'} TODO, add a fallback image
+                            style={{ cursor: 'pointer' }}
+                        />
+                    ))}
+                </div>
 
                 {/* Rooms, descriptions, amenities and details */}
                 <div className='room_desc_amenities_bookings'>
@@ -123,7 +130,8 @@ function Booking() {
                         <hr />
                         {/* Book Dates */}
                         <div>
-                            <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }}>
+                            <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }} role="button" aria-expanded={showCalendar} tabIndex={0}
+                                onKeyDown={(e) => e.key === 'Enter' && setShowCalendar(!showCalendar)}>
                                 <p><FontAwesomeIcon icon={faCalendarDays} />Dates</p>
                                 <FontAwesomeIcon icon={faChevronDown} />
                             </div>
@@ -141,17 +149,26 @@ function Booking() {
                             )}
 
                             <div className='text-muted'>
-                                <p><strong>Start:</strong> {format(selection[0].startDate, 'MMM dd, yyyy')}</p>
-                                <p><strong>End:</strong> {format(selection[0].endDate, 'MMM dd, yyyy')}</p>
+                                <p><strong>Arrival:</strong> {format(selection[0].startDate, 'MMM dd, yyyy')}</p>
+                                <p><strong>Departure:</strong> {format(selection[0].endDate, 'MMM dd, yyyy')}</p>
                             </div>
                         </div>
                         {/* Reserve date */}
-                        <hr/>
+                        <hr />
                         <div>
                             <p>Pricing</p>
                             <p>R{room.roomPrice}/night</p>
                         </div>
-                        <button className='btn btn-dark mt-2'>Pricing</button>
+                        <input type="text" placeholder="Your Name" className="form-control mb-2" />
+                        <input type="email" placeholder="Email Address" className="form-control mb-2" />
+                        <select className="form-control mb-2">
+                            <option value={1}>1 Guest</option>
+                            <option value={2}>2 Guests</option>
+                        </select>
+                        <button className='btn btn-dark mt-2'>Book</button>
+                        {/* Prices calculated by days * roomPrice */}
+                        <p>Total for {effectiveNumberOfDays} day stay: R{(room.roomPrice * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
+
                         {/* End of Reserve date */}
 
                     </div>

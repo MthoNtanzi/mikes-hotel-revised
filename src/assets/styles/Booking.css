@@ -1,9 +1,9 @@
 .bookingTitle{
-    background-image: url('https://images.pexels.com/photos/271639/pexels-photo-271639.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+    background-image: url('https://images.pexels.com/photos/3771110/pexels-photo-3771110.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    min-height: 400px;
+    min-height: 300px;
 
     position: relative;
     display: flex; 
@@ -98,4 +98,89 @@
 .booking_section{
     flex: 1;
     align-self: flex-start;
+}
+
+
+/* Responsiveness */
+
+@media (max-width: 768px) {
+  .bookingTitle h1 {
+    font-size: 2em; /* Makes the main title smaller on mobile */
+    margin-top: -30px; /* Adjusts top margin for better spacing */
+    margin-bottom: 30px; /* Adjusts bottom margin for better spacing */
+  }
+
+  .bookingTitle p {
+    max-width: 90%; /* Allows the paragraph to take up more width */
+    font-size: 0.9em; /* Makes the paragraph text slightly smaller */
+  }
+
+  .roomDetails {
+    width: 95vw; /* Increases the width of the main content area */
+    margin: 20px auto; /* Reduces vertical margin for tighter spacing */
+  }
+
+  .room_desc_amenities_bookings {
+    flex-direction: column; /* Stacks the description, amenities, and booking sections vertically */
+    padding-top: 20px; /* Adds a bit of padding to the top */
+  }
+
+  .room_desc,
+  .booking_section {
+    flex: unset; /* Removes flex shrinking/growing, allowing content to take natural width */
+    width: 100%; /* Makes sure these sections take full width */
+  }
+
+  .amenity_list {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Adjusts amenity list to fit more items per row */
+    gap: 15px; /* Reduces the gap between amenity items */
+  }
+
+  /* Calendar */
+
+  .rdrCalendar,
+  .rdrDateRangeWrapper {
+    width: 100% !important; /* Make calendar and its wrapper take full width */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  }
+
+  .rdrDateRangePickerWrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column; /* Stack elements within the picker wrapper */
+    align-items: center;
+    width: 100%;
+  }
+
+  .rdrCalendar {
+    max-width: 300px; /* Limit calendar width for very small screens */
+    margin: 0 auto; /* Center the calendar */
+  }
+
+  /* Adjust month display for smaller screens */
+  .rdrMonths {
+    flex-direction: column; /* Stack months vertically */
+    align-items: center;
+  }
+
+  .rdrMonth {
+    width: 100%; /* Make each month take full width */
+    margin-bottom: 20px; /* Add space between stacked months */
+  }
+
+  /* Reduce font size for calendar elements if needed */
+  .rdrDay,
+  .rdrWeekDay,
+  .rdrMonthName {
+    font-size: 0.9em;
+  }
+
+  /* Further adjustments for the calendar header and controls */
+  .rdrPristineButton {
+    padding: 8px; /* Adjust button padding */
+  }
+
+  .rdrNextPrevButton {
+    padding: 8px; /* Adjust next/previous button padding */
+  }
 }

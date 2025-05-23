@@ -24,10 +24,10 @@ function Header() {
                             <Link className='nav-link' to="/rooms">Rooms</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to="/booking">Booking</Link>
+                            <Link className='nav-link' to="/about">About</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className='nav-link' to="/about">About</Link>
+                            <Link className='btn btn-dark rounded-5 px-4' to="/booking">Login</Link>
                         </li>
                     </ul>
                 </div>
