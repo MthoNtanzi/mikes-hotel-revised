@@ -4,6 +4,8 @@ import './assets/fontawesome';
 import HomePage from './pages/HomePage';
 import Booking from "./pages/Booking";
 import Rooms from "./pages/Rooms";
+import About from "./pages/Experiences";
+import PNF from "./pages/PNF";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -17,6 +19,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/experiences" element={<About />} />
+          <Route path="/experiences" element={<About />} />
+          <Route path="*" element={<PNF />} />
         </Routes>
         <Footer />
       </div>

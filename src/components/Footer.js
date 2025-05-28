@@ -8,10 +8,10 @@ function Footer() {
       <div className='top_box'>
         <div className='left_footer_box footer_box'>
           <h2>Mike's Hotel</h2>
-          <div>
-            <Link to="#" className='btn btn-outline-light socials_buttons me-2'>Twitter</Link>
-            <Link to="#" className='btn btn-outline-light socials_buttons me-2'>Instagram</Link>
-            <Link to="#" className='btn btn-outline-light socials_buttons me-2'>Youtube</Link>
+          <div className='socials_buttons_container'>
+            <Link to="#" className='btn btn-outline-light socials_buttons'>Twitter</Link>
+            <Link to="#" className='btn btn-outline-light socials_buttons'>Instagram</Link>
+            <Link to="#" className='btn btn-outline-light socials_buttons'>Youtube</Link>
             <Link to="#" className='btn btn-outline-light socials_buttons'>Facebook</Link>
           </div>
         </div>
