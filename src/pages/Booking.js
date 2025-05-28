@@ -14,7 +14,7 @@ function Booking() {
     const room = location.state;
     const navigate = useNavigate();
 
-    const [images, setImages] = useState(room.roomImages);
+    const [images, setImages] = useState(room.images);
 
     const handleImageClick = (index) => {
         if (index === 0) return; // already in position 1
@@ -49,21 +49,21 @@ function Booking() {
     };
 
     const amenityIcons = {
-        "Coffee Maker": faMugSaucer,
-        "Bath Robes": faShirt,
-        "Bath Towels": faBath,
-        "Breakfast": faUtensils,
-        "wifi": faWifi,
-        "Parking": faCar,
-        "Gym Access": faDumbbell,
-        "Air Conditioner": faSnowflake
+        coffeeMaker: faMugSaucer,
+        bathRobes: faShirt,
+        bathTowels: faBath,
+        breakfast: faUtensils,
+        wifi: faWifi,
+        parking: faCar,
+        gymAccess: faDumbbell,
+        airConditioner: faSnowflake
     };
 
     return (
         <>
             <div className="bookingTitle">
                 <h1>Book your Stay</h1>
-                <p>You have chosen to stay in the {room.roomName}. View the room offerings and amenities and book your stay.</p>
+                <p>You have chosen to stay in the {room.name}. View the room offerings and amenities and book your stay.</p>
             </div>
             <h1>Bookings</h1>
             <div className='roomDetails card p-2'>
@@ -74,7 +74,7 @@ function Booking() {
                         <img
                             key={idx}
                             src={img}
-                            alt={room.roomName}
+                            alt={room.name}
                             className={`roomImg${idx + 1}`}
                             onClick={() => handleImageClick(idx)}
                             // onError={(e) => e.target.src = '/fallback.jpg'} TODO, add a fallback image
@@ -89,8 +89,8 @@ function Booking() {
                     <div className='room_desc'>
                         {/* Room and description */}
                         <div>
-                            <h1>{room.roomName}</h1>
-                            <p>{room.roomDetails}</p>
+                            <h1>{room.name}</h1>
+                            <p>{room.description}</p>
                         </div>
 
                         {/* Amenities */}
@@ -157,7 +157,7 @@ function Booking() {
                         <hr />
                         <div>
                             <p>Pricing</p>
-                            <p>R{room.roomPrice}/night</p>
+                            <p>R{room.price}/night</p>
                         </div>
                         <input type="text" placeholder="Your Name" className="form-control mb-2" />
                         <input type="email" placeholder="Email Address" className="form-control mb-2" />
@@ -167,7 +167,7 @@ function Booking() {
                         </select>
                         <button className='btn btn-dark mt-2'>Book</button>
                         {/* Prices calculated by days * roomPrice */}
-                        <p>Total for {effectiveNumberOfDays} day stay: R{(room.roomPrice * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
+                        <p>Total for {effectiveNumberOfDays} day stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
                         {/* End of Reserve date */}
 
