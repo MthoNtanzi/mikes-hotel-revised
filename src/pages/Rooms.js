@@ -8,7 +8,7 @@ function Rooms() {
         {
             id: 1,
             name: "Presidential Suite",
-            price: 5500,
+            price: 10500,
             images: [
                 "https://drsprnoe9nnhf.cloudfront.net/southernsun-04222022/cms/cache/v2/576be0af22ad4.jpg/1920x1080/resize/80/791c44a2aabe72e0c68f7b1b6239ea3b.jpg",
                 "https://drsprnoe9nnhf.cloudfront.net/southernsun-04222022/cms/cache/v2/576be09966d33.jpg/1920x1080/resize/80/40c64445e22c62672854640faa2ddca6.jpg",
@@ -30,7 +30,7 @@ function Rooms() {
         {
             id: 2,
             name: "Single Room",
-            price: 2000,
+            price: 4500,
             images: [
                 "https://images.pexels.com/photos/29252630/pexels-photo-29252630/free-photo-of-cozy-minimalist-bedroom-with-modern-decor.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
                 "https://images.pexels.com/photos/29252626/pexels-photo-29252626/free-photo-of-modern-minimalist-living-room-interior-with-stylish-sofa.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
@@ -52,7 +52,7 @@ function Rooms() {
         {
             id: 3,
             name: "Double Room",
-            price: 3500,
+            price: 7000,
             images: [
                 "https://images.pexels.com/photos/8142976/pexels-photo-8142976.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                 "https://images.pexels.com/photos/8142972/pexels-photo-8142972.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

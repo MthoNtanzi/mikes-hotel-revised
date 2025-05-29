@@ -48,6 +48,17 @@ function Booking() {
         setSelection([ranges.selection]);
     };
 
+    const amenityLabels = {
+        coffeeMaker: "Coffee Maker",
+        bathRobes: "Bath Robes",
+        bathTowels: "Bath Towels",
+        breakfast: "Breakfast",
+        wifi: "Wi-Fi",
+        parking: "Parking",
+        gymAccess: "Gym Access",
+        airConditioner: "Air Conditioner"
+    };
+
     const amenityIcons = {
         coffeeMaker: faMugSaucer,
         bathRobes: faShirt,
@@ -65,7 +76,7 @@ function Booking() {
                 <h1>Book your Stay</h1>
                 <p>You have chosen to stay in the {room.name}. View the room offerings and amenities and book your stay.</p>
             </div>
-            <h1>Bookings</h1>
+            <h1 className='main_heading'>Bookings</h1>
             <div className='roomDetails card p-2'>
 
                 {/* Rooms */}
@@ -115,7 +126,7 @@ function Booking() {
                             <hr />
                             <div className='d-flex flex-row justify-content-center gap-4 flex-wrap text-center'>
                                 <p><FontAwesomeIcon icon={faClock} /> Check In : 3:00 pm</p>
-                                <p><FontAwesomeIcon icon={faClock} /> Check Out : 12:00 pm</p>
+                                <p><FontAwesomeIcon icon={faClock} /> Check Out : 10:00 am</p>
                                 <p><FontAwesomeIcon icon={faCircleExclamation} /> Minimum Age to Check In : 18</p>
                             </div>
 

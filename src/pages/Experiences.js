@@ -64,7 +64,7 @@ function Experiences() {
                 <h1>Experiences</h1>
                 <p>Mike's Hotel is your home filled with amazing sights and adventures for you. Find joy, rest and enjoy your stay with our loving staff that will make your experience a memorable one.</p>
             </div>
-            <h1>Experiences near Mike's Hotel</h1>
+            <h1 className='main_heading'>Experiences near Mike's Hotel</h1>
             <div className='experiencesMain'>
                 {experiences.map((exp) =>(
                     <div className='image_and_text' key={exp.id}>
