@@ -15,6 +15,9 @@ function Booking() {
     const navigate = useNavigate();
 
     const [images, setImages] = useState(room.images);
+    const [guestName, setGuestName] = useState('');
+    const [email, setEmail] = useState('');
+    const [guests, setGuests] = useState(1);
 
     const handleImageClick = (index) => {
         if (index === 0) return; // already in position 1
@@ -24,6 +27,47 @@ function Booking() {
         newImages.unshift(selectedImage); // add it to the front
         setImages(newImages);
     };
+
+    const handleBooking = () => {
+    if (!guestName || !email) {
+    alert("Please enter your name and email.");
+    return;
+  }
+
+  const bookingDetails = {
+    room: room.name,
+    name: guestName,
+    email,
+    guests,
+    startDate: selection[0].startDate,
+    endDate: selection[0].endDate,
+    totalPrice: room.price * effectiveNumberOfDays,
+  };
+
+        console.log("Booking Submitted:", bookingDetails);
+        
+        // Reset form inputs
+setGuestName('');
+setEmail('');
+setGuests(1);
+
+// Reset calendar selection to today
+setSelection([
+  {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+  }
+]);
+
+// Optionally hide the calendar
+setShowCalendar(false);
+  alert("Booking submitted successfully!");
+
+  // Optional: navigate to a confirmation page
+  // navigate("/confirmation", { state: bookingDetails });
+};
+
 
     const [showCalendar, setShowCalendar] = useState(false);
     const [selection, setSelection] = useState([
@@ -170,13 +214,30 @@ function Booking() {
                             <p>Pricing</p>
                             <p>R{room.price}/night</p>
                         </div>
-                        <input type="text" placeholder="Your Name" className="form-control mb-2" />
-                        <input type="email" placeholder="Email Address" className="form-control mb-2" />
-                        <select className="form-control mb-2">
-                            <option value={1}>1 Guest</option>
-                            <option value={2}>2 Guests</option>
-                        </select>
-                        <button className='btn btn-dark mt-2'>Book</button>
+                        <input
+  type="text"
+  placeholder="Your Name"
+  className="form-control mb-2"
+  value={guestName}
+  onChange={(e) => setGuestName(e.target.value)}
+/>
+                        <input
+  type="email"
+  placeholder="Email Address"
+  className="form-control mb-2"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+/>
+                        
+<select
+  className="form-control mb-2"
+  value={guests}
+  onChange={(e) => setGuests(Number(e.target.value))}
+>
+  <option value={1}>1 Guest</option>
+  <option value={2}>2 Guests</option>
+</select>
+                        <button className='btn btn-dark mt-2'  onClick={handleBooking}>Book</button>
                         {/* Prices calculated by days * roomPrice */}
                         <p>Total for {effectiveNumberOfDays} day stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
