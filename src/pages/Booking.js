@@ -114,7 +114,7 @@ function Booking() {
                                     .map(([amenity, count]) => (
                                         <li key={amenity} className="flex items-center gap-2">
                                             <FontAwesomeIcon icon={amenityIcons[amenity]} className="text-blue-600" />
-                                            <span> {amenity}</span>
+                                            <span> {amenityLabels[amenity] || amenity}</span>
                                             <span className="text-sm text-gray-600 font-semibold">: {count}</span>
                                         </li>
                                     ))}
