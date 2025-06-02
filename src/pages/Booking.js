@@ -18,6 +18,7 @@ function Booking() {
     const [guestName, setGuestName] = useState('');
     const [email, setEmail] = useState('');
     const [guests, setGuests] = useState(1);
+    const [success, setSuccess] = useState(false); // for showing confirmation
 
     const handleImageClick = (index) => {
         if (index === 0) return; // already in position 1
@@ -28,45 +29,81 @@ function Booking() {
         setImages(newImages);
     };
 
-    const handleBooking = () => {
-    if (!guestName || !email) {
-    alert("Please enter your name and email.");
-    return;
-  }
+    const handleBooking = async () => {
+        if (!guestName || !email) {
+            alert("Please enter your name and email.");
+            return;
+        }
 
-  const bookingDetails = {
-    room: room.name,
-    name: guestName,
-    email,
-    guests,
-    startDate: selection[0].startDate,
-    endDate: selection[0].endDate,
-    totalPrice: room.price * effectiveNumberOfDays,
-  };
+        const payload = {
+            emailAddress: email,
+            checkInDate: selection[0].startDate.toISOString().split('T')[0],
+            checkOutDate: selection[0].endDate.toISOString().split('T')[0],
+            numOfGuests: Number(guests),
+            guestName: guestName,
+            roomType: room.name
+        };
+
+        const bookingDetails = {
+            room: room.name,
+            name: guestName,
+            email,
+            guests,
+            startDate: selection[0].startDate,
+            endDate: selection[0].endDate,
+            totalPrice: room.price * effectiveNumberOfDays,
+        };
 
         console.log("Booking Submitted:", bookingDetails);
-        
-        // Reset form inputs
-setGuestName('');
-setEmail('');
-setGuests(1);
 
-// Reset calendar selection to today
-setSelection([
-  {
-    startDate: new Date(),
-    endDate: new Date(),
-    key: 'selection'
-  }
-]);
 
-// Optionally hide the calendar
-setShowCalendar(false);
-  alert("Booking submitted successfully!");
+        try {
+            const res = await fetch('http://localhost:5000/api/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload),
+            });
 
-  // Optional: navigate to a confirmation page
-  // navigate("/confirmation", { state: bookingDetails });
-};
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.message || "Booking failed");
+            }
+
+            // Success
+            setSuccess(true);
+            alert("Booking successful!");
+            // navigate('/confirmation', {
+            //     state: {
+            //         booking: data,
+            //         room: room,
+            //         totalPrice: room.price * effectiveNumberOfDays
+            //     }
+            // });
+
+            // Reset form inputs
+            setGuestName('');
+            setEmail('');
+            setGuests(1);
+
+            //hide the calendar
+            setShowCalendar(false);
+
+            // Reset calendar selection to today
+            setSelection([
+                {
+                    startDate: new Date(),
+                    endDate: new Date(),
+                    key: 'selection'
+                }
+            ]);
+        } catch (err) {
+            console.error('Booking error:', err);
+            alert(err.message || 'Something went wrong. Please try again.');
+        }
+        // Optional: navigate to a confirmation page
+        // navigate("/confirmation", { state: bookingDetails });
+    };
 
 
     const [showCalendar, setShowCalendar] = useState(false);
@@ -215,29 +252,29 @@ setShowCalendar(false);
                             <p>R{room.price}/night</p>
                         </div>
                         <input
-  type="text"
-  placeholder="Your Name"
-  className="form-control mb-2"
-  value={guestName}
-  onChange={(e) => setGuestName(e.target.value)}
-/>
+                            type="text"
+                            placeholder="Your Name"
+                            className="form-control mb-2"
+                            value={guestName}
+                            onChange={(e) => setGuestName(e.target.value)}
+                        />
                         <input
-  type="email"
-  placeholder="Email Address"
-  className="form-control mb-2"
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-/>
-                        
-<select
-  className="form-control mb-2"
-  value={guests}
-  onChange={(e) => setGuests(Number(e.target.value))}
->
-  <option value={1}>1 Guest</option>
-  <option value={2}>2 Guests</option>
-</select>
-                        <button className='btn btn-dark mt-2'  onClick={handleBooking}>Book</button>
+                            type="email"
+                            placeholder="Email Address"
+                            className="form-control mb-2"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+
+                        <select
+                            className="form-control mb-2"
+                            value={guests}
+                            onChange={(e) => setGuests(Number(e.target.value))}
+                        >
+                            <option value={1}>1 Guest</option>
+                            <option value={2}>2 Guests</option>
+                        </select>
+                        <button className='btn btn-dark mt-2' onClick={handleBooking}>Book</button>
                         {/* Prices calculated by days * roomPrice */}
                         <p>Total for {effectiveNumberOfDays} day stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 

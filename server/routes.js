@@ -4,7 +4,7 @@ const db = require('./db');
 
 // POST a new booking
 router.post('/bookings', async (req, res) => {
-  const { emailAddress, checkInDate, checkOutDate, numOfGuests } = req.body;
+  const { emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType } = req.body;
 
   if (!emailAddress || !checkInDate || !checkOutDate ) {
     return res.status(400).json({ message: 'All fields are required' });
@@ -12,12 +12,13 @@ router.post('/bookings', async (req, res) => {
 
   try {
     const result = await db.query(
-      'INSERT INTO bookings (emailAddress, checkInDate, checkOutDate, numOfGuests) VALUES ($1, $2, $3, $4) RETURNING *',
-      [emailAddress, checkInDate, checkOutDate, numOfGuests]
+      'INSERT INTO bookings (emailaddress, checkindate, checkoutdate, numofguests, guestname, roomtype) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+      [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Database error:', err);
+    res.status(500).json({ message:'Failed to create booking',error: err.message });
   }
 });
 
