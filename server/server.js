@@ -16,6 +16,10 @@ app.use((req, res, next) => {
 
 app.use('/api', routes);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to Mikes Hotel API!');
+});
+
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
