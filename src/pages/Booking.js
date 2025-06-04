@@ -35,13 +35,20 @@ function Booking() {
             return;
         }
 
+        //Room type map to make it easier to send room payload to database
+        const roomTypeMap = {
+            'Single Room': 'single',
+            'Double Room': 'double',
+            'Presidential Suite': 'suite'
+        };
+
         const payload = {
             emailAddress: email,
             checkInDate: selection[0].startDate.toISOString().split('T')[0],
             checkOutDate: selection[0].endDate.toISOString().split('T')[0],
             numOfGuests: Number(guests),
             guestName: guestName,
-            roomType: room.name
+            roomType: roomTypeMap[room.name]
         };
 
         const bookingDetails = {
