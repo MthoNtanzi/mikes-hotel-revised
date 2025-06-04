@@ -48,8 +48,12 @@ function Booking() {
             checkOutDate: selection[0].endDate.toISOString().split('T')[0],
             numOfGuests: Number(guests),
             guestName: guestName,
-            roomType: roomTypeMap[room.name]
+            roomType: roomTypeMap[room.name],
+            roomPrice: room.price,
+            totalPrice: room.price * effectiveNumberOfDays
         };
+
+        console.log(payload);
 
         const bookingDetails = {
             room: room.name,

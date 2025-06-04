@@ -1,9 +1,9 @@
 const pool = require('./db');
 
 async function initDb() {
-  try {
-    // Create the bookings table if it doesn't exist
-    await pool.query(`
+    try {
+        // Create the bookings table if it doesn't exist
+        await pool.query(`
       CREATE TABLE IF NOT EXISTS bookings (
         id SERIAL PRIMARY KEY,
         emailaddress TEXT NOT NULL,
@@ -12,12 +12,14 @@ async function initDb() {
         numofguests INTEGER NOT NULL,
         guestname TEXT,
         roomtype TEXT,
-        reference_number TEXT
+        reference_number TEXT,
+        roomprice DECIMAL(10, 2) NOT NULL,
+        totalprice DECIMAL (10, 2) NOT NULL
       );
     `);
 
-    // Add the reference_number column if it doesn't exist
-    await pool.query(`
+        // Add the reference_number column if it doesn't exist
+        await pool.query(`
       DO $$
       BEGIN
         IF NOT EXISTS (
@@ -30,29 +32,31 @@ async function initDb() {
       END$$;
     `);
 
-    // Create the trigger function
-    await pool.query(`
+        // Create the trigger function
+        await pool.query(`
       CREATE OR REPLACE FUNCTION generate_reference_number()
       RETURNS TRIGGER AS $$
       DECLARE
           room_code TEXT;
           name_prefix TEXT;
+          stay_length INTEGER;
       BEGIN
           room_code := CASE LOWER(NEW.roomtype)
                           WHEN 'single' THEN '100'
                           WHEN 'double' THEN '200'
-                          WHEN 'suite'  THEN '300'
+                          WHEN 'suite' THEN '300'
                           ELSE '000'
                        END;
           name_prefix := UPPER(SUBSTRING(NEW.guestname FROM 1 FOR 3));
-          NEW.reference_number := room_code || name_prefix || NEW.numofguests;
+          stay_length := (NEW.checkoutdate - NEW.checkindate);
+            NEW.reference_number := room_code || name_prefix || NEW.numofguests || stay_length::TEXT;
           RETURN NEW;
       END;
       $$ LANGUAGE plpgsql;
     `);
 
-    // Create the trigger if not exists
-    await pool.query(`
+        // Create the trigger if not exists
+        await pool.query(`
       DO $$
       BEGIN
         IF NOT EXISTS (
@@ -66,12 +70,12 @@ async function initDb() {
       END$$;
     `);
 
-    console.log('Database initialized.');
-    process.exit();
-  } catch (err) {
-    console.error('Database initialization failed:', err);
-    process.exit(1);
-  }
+        console.log('Database initialized.');
+        process.exit();
+    } catch (err) {
+        console.error('Database initialization failed:', err);
+        process.exit(1);
+    }
 }
 
 initDb();

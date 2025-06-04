@@ -4,7 +4,7 @@ const db = require('./db');
 
 // POST a new booking
 router.post('/bookings', async (req, res) => {
-  const { emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType } = req.body;
+  const { emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice } = req.body;
 
   if (!emailAddress || !checkInDate || !checkOutDate ) {
     return res.status(400).json({ message: 'All fields are required' });
@@ -12,8 +12,8 @@ router.post('/bookings', async (req, res) => {
 
   try {
     const result = await db.query(
-      'INSERT INTO bookings (emailaddress, checkindate, checkoutdate, numofguests, guestname, roomtype) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-      [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType]
+      'INSERT INTO bookings (emailaddress, checkindate, checkoutdate, numofguests, guestname, roomtype, roomprice, totalprice) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+      [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice]
     );
     res.status(201).json(result.rows[0]);
   } catch (err) {
