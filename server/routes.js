@@ -32,4 +32,27 @@ router.get('/bookings', async (req, res) => {
   }
 });
 
+// GET a booking by reference number
+router.get('/bookings/:refNumber', async (req, res) => {
+  const { refNumber } = req.params;
+
+  try {
+    const result = await db.query(
+      'SELECT * FROM bookings WHERE reference_number = $1',
+      [refNumber]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching booking by reference number:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
+
 module.exports = router;

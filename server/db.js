@@ -1,14 +1,11 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'mikes_hotel_user',
-  host: 'dpg-d105ogbe5dus739bkohg-a',
+  user: 'mthontanzi_workdevice_01',
+  host: 'localhost',
   database: 'mikes_hotel',
-  password: 'ImYBnA54Ni4oCoR8bVc7HRz7MtABe1jO',
+  password: 'Champ@12',
   port: 5432, // default PostgreSQL port
-  ssl: {
-    rejectUnauthorized: false // required by Render
-  }
 });
 
 pool.on('connect', () => {
