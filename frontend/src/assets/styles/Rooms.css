@@ -58,5 +58,6 @@
 }
 
 .roomCard{
+    margin-inline: 10px;
     max-width: 350px;
 }

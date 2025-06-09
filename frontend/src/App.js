@@ -23,8 +23,8 @@ function App() {
           <Route path="/experiences" element={<About />} />
           <Route path="*" element={<PNF />} />
         </Routes>
-        <Footer />
       </div>
+      <Footer />
     </BrowserRouter>
   );
 }

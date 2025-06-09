@@ -23,6 +23,10 @@
 
 }
 
+.container{
+  height: fit-content;
+}
+
 /* Images */
 
 .image-container {
@@ -36,4 +40,21 @@
 
 .hover-grow:hover {
   transform: scale(1.1); /* grow 10% */
+}
+
+@media only screen and (max-width: 400px) {
+  .introVid{
+    height: 60vh;
+  }
+
+  .aboutUsCard{
+    margin-top: -140px;
+    margin-bottom: 50px;
+    background-color: #909eae49;
+    width: 90%;
+    font-weight: 400;
+    font-size: small;
+    background-image: none;
+    padding-inline: 10px;
+  }
 }
