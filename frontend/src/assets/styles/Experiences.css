@@ -85,6 +85,7 @@
     .experiencesMain {
         margin-top: 50px;
         text-align: left;
+        padding-inline: 20px;
     }
 
     .main_heading {
@@ -94,6 +95,7 @@
     .image_and_text {
         margin: 140px auto;
         flex-direction: row;
+        gap: 20px;
     }
 
     .image_and_text:nth-child(2n) {

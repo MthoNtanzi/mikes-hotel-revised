@@ -2,8 +2,10 @@ import React from 'react';
 import '../assets/styles/HomePage.css';
 // import introVid from '../assets/videos/intro_video.mp4';
 import introScene from '../assets/videos/intro_scene.mp4';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
+    const navigate = useNavigate();
 
     const homeImages = [
         `https://plus.unsplash.com/premium_photo-1661929519129-7a76946c1d38?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
@@ -28,12 +30,12 @@ function HomePage() {
             <div className='card_and_info'>
                 <div className='card aboutUsCard py-4'>
                     <p className='h3 mb-6'>Comfortable rooms for you!</p>
-                    <button className='btn btn-outline-dark w-50 mx-auto p-2'>Check availabilty</button>
+                    <button className='btn btn-outline-dark w-50 mx-auto p-2' onClick={() => navigate('/rooms')}>Check availabilty</button>
                 </div>
                 <div className='px-5'>
                     <h1 className='mt-4'>Stay With Us</h1>
                     {/* TODO Schedule Booking */}
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis ornare sodales. Morbi dapibus sem vulputate diam tincidunt, non malesuada nunc semper. Nam accumsan urna eget dolor euismod facilisis. Donec.</p>
+                    <p>Welcome to Mike's Hotel. We are pleased to host you. Whether for business or pleasure you can find comfort at Mike's Hotel, where you will find the best luxury accomadation known to man.</p>
                 </div>
             </div>
 
