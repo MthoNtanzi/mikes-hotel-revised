@@ -77,6 +77,7 @@ function Experiences() {
                             <p><strong>Time:</strong> {exp.times.start} - {exp.times.end}</p>
                             <p><strong>Cost:</strong> R{exp.cost}</p>
                             {exp.duration && <p><strong>Duration:</strong> {exp.duration}</p>}
+                            <button className='btn btn-outline-dark rounded-5'>Book Now</button>
                         </div>
                     </div>
                 ))}
