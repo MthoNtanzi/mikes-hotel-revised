@@ -129,12 +129,21 @@
     width: 95vw; /* Prevents sizing inconsistencies */
 }
 
-.room_desc_amenities_bookings {
-    display: flex;
-    flex-wrap: wrap; /* Allows flexibility across different screen sizes */
-    gap: 10px;
-    align-items: flex-start;
-}
+  .roomImages {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .roomImages img {
+      margin-bottom: 10px;
+  }
+
+  .room_desc_amenities_bookings {
+      display: flex;
+      flex-wrap: wrap; /* Allows flexibility across different screen sizes */
+      gap: 10px;
+      align-items: flex-start;
+  }
 
   .room_desc,
   .booking_section {
