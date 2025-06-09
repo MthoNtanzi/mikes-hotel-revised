@@ -42,7 +42,7 @@
   transform: scale(1.1); /* grow 10% */
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 560px) {
   .introVid{
     height: 60vh;
   }
@@ -51,9 +51,9 @@
     margin-top: -140px;
     margin-bottom: 50px;
     background-color: #909eae49;
-    width: 90%;
-    font-weight: 400;
-    font-size: small;
+    -webkit-background-color: #909eae49;
+    width: 95%;
+    font-weight: 200;
     background-image: none;
     padding-inline: 10px;
   }

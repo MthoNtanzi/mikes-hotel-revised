@@ -287,7 +287,7 @@ function Booking() {
                         </select>
                         <button className='btn btn-dark mt-2' onClick={handleBooking}>Book</button>
                         {/* Prices calculated by days * roomPrice */}
-                        <p>Total for {effectiveNumberOfDays} day stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
+                        <p>Total for {effectiveNumberOfDays} night stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
                         {/* End of Reserve date */}
 
