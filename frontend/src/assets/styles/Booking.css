@@ -55,7 +55,7 @@
 
     img{
         width: 100%;
-        height: 100%;
+        margin: auto;
         object-fit: cover;
         border-radius: 8px;
     }
@@ -213,7 +213,8 @@
       }
       
       .roomImages img {
-          margin-bottom: 10px;
+        width: 100%;
+        margin-bottom: 10px;
       }
   }
 }
