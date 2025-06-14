@@ -32,4 +32,42 @@ router.get('/bookings', async (req, res) => {
   }
 });
 
+// GET a booking by reference number
+router.get('/bookings/:referenceNumber', async (req, res) => {
+  const { referenceNumber } = req.params;
+
+  try {
+    const result = await db.query('SELECT * FROM bookings WHERE reference_number = $1', [referenceNumber]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error('Error fetching booking:', err);
+    res.status(500).json({ message: 'Failed to fetch booking', error: err.message });
+  }
+});
+
+
+// DELETE a booking by reference number
+router.delete('/bookings/:referenceNumber', async (req, res) => {
+  const { referenceNumber } = req.params;
+
+  try {
+    const result = await db.query('DELETE FROM bookings WHERE reference_number = $1 RETURNING *', [referenceNumber]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+
+    res.json({ message: 'Booking deleted successfully', deletedBooking: result.rows[0] });
+  } catch (err) {
+    console.error('Error deleting booking:', err);
+    res.status(500).json({ message: 'Failed to delete booking', error: err.message });
+  }
+});
+
+
 module.exports = router;

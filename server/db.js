@@ -1,14 +1,13 @@
+require('dotenv').config();
+
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'mikes_hotel_user',
-  host: 'dpg-d105ogbe5dus739bkohg-a',
-  database: 'mikes_hotel',
-  password: 'ImYBnA54Ni4oCoR8bVc7HRz7MtABe1jO',
-  port: 5432, // default PostgreSQL port
-  ssl: {
-    rejectUnauthorized: false // required by Render
-  }
+  user: process.env.DB_host,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
 });
 
 pool.on('connect', () => {
