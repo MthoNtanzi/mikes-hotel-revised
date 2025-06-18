@@ -20,7 +20,12 @@ app.get('/', (req, res) => {
   res.send('Welcome to Mikes Hotel API!');
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
+const PORT = 5001;
+app.listen(PORT, (error) => {
+  if (error) {
+    console.log(error);
+  }
   console.log(`Server running on http://localhost:${PORT}`);
+}).on('error', (err) => {
+  console.error('Failed to start server:', err.message);
 });

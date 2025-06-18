@@ -69,7 +69,7 @@ function Booking() {
 
 
         try {
-            const res = await fetch('https://mikes-hotel-revised.onrender.com/bookings', {
+            const res = await fetch('http://localhost:5001/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
