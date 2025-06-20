@@ -23,7 +23,7 @@ function HomePage() {
         <div className='main-page'>
 
             {/* Intro video */}
-            <video className='introVid' autoPlay loop muted>
+            <video className='introVid' autoPlay loop muted playsInline preload="auto">
                 <source src={introScene} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>

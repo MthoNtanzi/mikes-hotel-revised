@@ -12,7 +12,6 @@ import '../assets/styles/Booking.css';
 function Booking() {
     const location = useLocation();
     const room = location.state;
-    const navigate = useNavigate();
 
     const [images, setImages] = useState(room.images);
     const [guestName, setGuestName] = useState('');
@@ -24,8 +23,8 @@ function Booking() {
         if (index === 0) return; // already in position 1
 
         const newImages = [...images];
-        const [selectedImage] = newImages.splice(index, 1); // remove clicked image
-        newImages.unshift(selectedImage); // add it to the front
+        // Swap positions between clicked image and first image
+        [newImages[0], newImages[index]] = [newImages[index], newImages[0]];
         setImages(newImages);
     };
 
@@ -83,7 +82,6 @@ function Booking() {
 
             // Success
             setSuccess(true);
-            alert("Booking successful!");
             // navigate('/confirmation', {
             //     state: {
             //         booking: data,

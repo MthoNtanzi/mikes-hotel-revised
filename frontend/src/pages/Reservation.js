@@ -1,11 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import QRCode from 'qrcode';
+import { jsPDF } from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import '../assets/styles/Reservations.css';
 
 function Reservations() {
 
+    const location = useLocation();
+    const passedBooking = location.state?.booking;
+
     const [referenceNumber, setReferenceNumber] = useState('');
-    const [booking, setBooking] = useState(null);
+    const [booking, setBooking] = useState(passedBooking || null);
     const [error, setError] = useState('');
+
+    useEffect(() => {
+        if (passedBooking) {
+            setReferenceNumber(passedBooking.reference_number || '');
+        }
+    }, [passedBooking]);
+
+    useEffect(() => {
+        if (booking) {
+            QRCode.toCanvas(document.getElementById('qr-canvas'), `http://localhost:5173/reservations?ref=${booking.reference_number}`, function (error) {
+                if (error) console.error(error);
+            });
+        }
+    }, [booking]);
 
     async function fetchBookingByRef(ref) {
         try {
@@ -30,6 +51,52 @@ function Reservations() {
         e.preventDefault();
         if (referenceNumber.trim()) {
             fetchBookingByRef(referenceNumber.trim());
+        }
+    };
+
+    const handleDownloadPDF = () => {
+        if (!booking) return;
+
+        const doc = new jsPDF();
+        doc.text("Booking Confirmation", 20, 20);
+
+        autoTable(doc, {  // Use autoTable directly
+            startY: 30,
+            head: [["Field", "Value"]],
+            body: [
+                ["Guest Name", booking.guestname],
+                ["Email", booking.emailaddress],
+                ["Check-in", new Date(booking.checkindate).toLocaleDateString()],
+                ["Check-out", new Date(booking.checkoutdate).toLocaleDateString()],
+                ["Guests", booking.numofguests],
+                ["Room Type", booking.roomtype],
+                ["Room Price", `R${booking.roomprice}`],
+                ["Total Price", `R${booking.totalprice}`],
+                ["Reference Number", booking.reference_number],
+            ],
+        });
+
+        doc.save(`booking_${booking.reference_number}.pdf`);
+    };
+
+    const handleCancelBooking = async () => {
+        if (!booking) return;
+        const confirmDelete = window.confirm("Are you sure you want to cancel this booking?");
+        if (!confirmDelete) return;
+
+        try {
+            const res = await fetch(`http://localhost:5001/api/bookings/${booking.reference_number}`, {
+                method: 'DELETE',
+            });
+
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Failed to cancel booking");
+
+            alert("Booking cancelled successfully.");
+            setBooking(null);
+            setReferenceNumber('');
+        } catch (err) {
+            alert(err.message);
         }
     };
 
@@ -63,7 +130,19 @@ function Reservations() {
                         <p><strong>Room Price:</strong> R{booking.roomprice}</p>
                         <p><strong>Total Price:</strong> R{booking.totalprice}</p>
                         <p><strong>Reference Number:</strong> {booking.reference_number}</p>
+
+                        <div className="actions">
+                            <button onClick={handleDownloadPDF}>Download PDF</button>
+                            <button onClick={handleCancelBooking} className="cancel-btn">Cancel Booking</button>
+                            <div style={{ marginTop: '1rem' }}>
+                                <p>Scan to view:</p>
+                                <canvas id="qr-canvas" />
+                            </div>
+                        </div>
+
                     </div>
+
+
                 )}
             </div>
         </>
