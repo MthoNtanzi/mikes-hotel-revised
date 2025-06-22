@@ -93,6 +93,7 @@ function Rooms() {
                                 src={room.images[0]}
                                 alt={room.name}
                                 className='img-fluid rounded'
+                                loading="lazy"
                             />
                             <p>{room.name}</p>
                             <button

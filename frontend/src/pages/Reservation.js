@@ -108,12 +108,13 @@ function Reservations() {
                 <form onSubmit={handleSubmit}>
                     <input
                         type="text"
+                        className='reservationTextInput'
                         placeholder="Enter your reference number"
                         value={referenceNumber}
                         onChange={(e) => setReferenceNumber(e.target.value)}
                         required
                     />
-                    <button type="submit">Search</button>
+                    <button type="submit" className='reservationBtn'>Search</button>
                 </form>
 
                 {error && <p className="error">{error}</p>}

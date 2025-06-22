@@ -19,7 +19,7 @@ function HomePage() {
 
     const chunkedImages = [homeImages.slice(0, 3), homeImages.slice(3, 6)]
 
-    return(
+    return (
         <div className='main-page'>
 
             {/* Intro video */}
@@ -44,21 +44,23 @@ function HomePage() {
                 {chunkedImages.map((row, rowIndex) => (
                     <div className='row' key={rowIndex}>
                         {row.map((src, index) => (
-                                <div className="col-lg-4 col-12 mb-4 d-flex justify-content-center image-container" key={index}>
-                                    <img
-                                        className='img-fluid rounded hover-grow'
-                                        alt={`Hotel lobby ${rowIndex * 3 + index + 1}`}
-                                        height={200} width={250} src={src} />
-                                </div>
-                            ))
+                            <div className="col-lg-4 col-12 mb-4 d-flex justify-content-center image-container" key={index}>
+                                <img
+                                    className='img-fluid rounded hover-grow'
+                                    alt={`Hotel lobby ${rowIndex * 3 + index + 1}`}
+                                    height={200} width={250} src={src}
+                                    loading="lazy"
+                                />
+                            </div>
+                        ))
                         }
                     </div>
-                    ))
+                ))
                 }
-                
+
             </div>
-            
-                
+
+
         </div>
     );
 }

@@ -82,13 +82,8 @@ function Booking() {
 
             // Success
             setSuccess(true);
-            // navigate('/confirmation', {
-            //     state: {
-            //         booking: data,
-            //         room: room,
-            //         totalPrice: room.price * effectiveNumberOfDays
-            //     }
-            // });
+            alert("Booking successful!");
+
 
             // Reset form inputs
             setGuestName('');
@@ -180,6 +175,7 @@ function Booking() {
                             onClick={() => handleImageClick(idx)}
                             // onError={(e) => e.target.src = '/fallback.jpg'} TODO, add a fallback image
                             style={{ cursor: 'pointer' }}
+                            loading="lazy"
                         />
                     ))}
                 </div>

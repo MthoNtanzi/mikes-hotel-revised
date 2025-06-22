@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../assets/styles/Experiences.css';
 
 function Experiences() {
@@ -56,6 +56,49 @@ function Experiences() {
         }
     ];
 
+    const [formData, setFormData] = useState({
+        experience: '',
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        time: '',
+        guests: 1,
+        specialRequests: ''
+    });
+
+    const [isSubmitted, setIsSubmitted] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Here you would typically send the data to your backend
+        console.log('Form submitted:', formData);
+        setIsSubmitted(true);
+        // Reset form after submission
+        setFormData({
+            experience: '',
+            name: '',
+            email: '',
+            phone: '',
+            date: '',
+            time: '',
+            guests: 1,
+            specialRequests: ''
+        });
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+            setIsSubmitted(false);
+        }, 5000);
+    };
 
     return (
         <>
@@ -66,10 +109,10 @@ function Experiences() {
             </div>
             <h1 className='main_heading'>Experiences near Mike's Hotel</h1>
             <div className='experiencesMain'>
-                {experiences.map((exp) =>(
+                {experiences.map((exp) => (
                     <div className='image_and_text' key={exp.id}>
                         <div className='experience_image'>
-                            <img src={exp.image} alt={exp.name}/>
+                            <img src={exp.image} alt={exp.name} loading="lazy" />
                         </div>
                         <div className='experience_text'>
                             <h2>{exp.name}</h2>
@@ -77,11 +120,131 @@ function Experiences() {
                             <p><strong>Time:</strong> {exp.times.start} - {exp.times.end}</p>
                             <p><strong>Cost:</strong> R{exp.cost}</p>
                             {exp.duration && <p><strong>Duration:</strong> {exp.duration}</p>}
-                            <button className='btn btn-outline-dark rounded-5'>Book Now</button>
                         </div>
                     </div>
                 ))}
-                
+
+                <div className='p-5'>
+                    <div className='booking-form-container'>
+                    <h2>Book an experience</h2>
+                    {isSubmitted ? (
+                        <div className="alert alert-success">
+                            Thank you! Your booking request has been submitted. Show your hotel reference number when you get to the venue to enjoy the experience.
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="booking-form">
+                            <div className="form-group">
+                                <label htmlFor="experience">Select Experience</label>
+                                <select 
+                                    id="experience" 
+                                    name="experience" 
+                                    value={formData.experience}
+                                    onChange={handleChange}
+                                    required
+                                >
+                                    <option value="">-- Choose an experience --</option>
+                                    {experiences.map(exp => (
+                                        <option key={exp.id} value={exp.name}>
+                                            {exp.name} (R{exp.cost})
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="name">Full Name</label>
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="email">Email</label>
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="phone">Phone Number</label>
+                                <input 
+                                    type="tel" 
+                                    id="phone" 
+                                    name="phone" 
+                                    value={formData.phone}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+
+                            <div className="form-row">
+                                <div className="form-group">
+                                    <label htmlFor="date">Date</label>
+                                    <input 
+                                        type="date" 
+                                        id="date" 
+                                        name="date" 
+                                        value={formData.date}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="time">Preferred Time</label>
+                                    <input 
+                                        type="time" 
+                                        id="time" 
+                                        name="time" 
+                                        value={formData.time}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="guests">Number of Guests</label>
+                                    <input 
+                                        type="number" 
+                                        id="guests" 
+                                        name="guests" 
+                                        min="1"
+                                        value={formData.guests}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="specialRequests">Special Requests</label>
+                                <textarea 
+                                    id="specialRequests" 
+                                    name="specialRequests" 
+                                    rows="3"
+                                    value={formData.specialRequests}
+                                    onChange={handleChange}
+                                />
+                            </div>
+
+                            <button type="submit" className="btn btn-primary">
+                                Submit Booking Request
+                            </button>
+                        </form>
+                    )}
+                </div>
+                </div>
+
             </div>
 
         </>
