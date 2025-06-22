@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db');
+const nodemailer = require('nodemailer');
 
 // POST a new booking
 router.post('/bookings', async (req, res) => {
@@ -15,6 +16,35 @@ router.post('/bookings', async (req, res) => {
       'INSERT INTO bookings (emailaddress, checkindate, checkoutdate, numofguests, guestname, roomtype, roomprice, totalprice) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice]
     );
+    
+    // Setup mail transporter
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,       // e.g., your Gmail address
+        pass: process.env.EMAIL_PASS        // e.g., your Gmail App Password
+      }
+    });
+    
+    // Compose email
+    let mailOptions = {
+      from: `"Mike's Hotel | Reservations" <${process.env.EMAIL_USER}>`,
+      to: emailAddress,
+      subject: "Booking Confirmation",
+      html: `
+      <h2>Thank you for your booking, ${guestName}!</h2>
+      <p><strong>Room:</strong> ${roomType}</p>
+      <p><strong>Check-in:</strong> ${checkInDate}</p>
+      <p><strong>Check-out:</strong> ${checkOutDate}</p>
+      <p><strong>Guests:</strong> ${numOfGuests}</p>
+      <p><strong>Total Price:</strong> $${totalPrice}</p>
+      <p>We look forward to your stay!</p>
+      `
+    };
+    
+    // Send email
+    await transporter.sendMail(mailOptions);
+    
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Database error:', err);
