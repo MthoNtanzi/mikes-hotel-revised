@@ -20,12 +20,17 @@ app.get('/', (req, res) => {
   res.send('Welcome to Mikes Hotel API!');
 });
 
-const PORT = 5001;
-app.listen(PORT, (error) => {
-  if (error) {
-    console.log(error);
-  }
-  console.log(`Server running on http://localhost:${PORT}`);
-}).on('error', (err) => {
-  console.error('Failed to start server:', err.message);
-});
+module.exports = app;
+
+// Only listen locally when not in Vercel environment
+if (process.env.VERCEL !== '1') {
+  const PORT = 5001;
+  app.listen(PORT, (error) => {
+    if (error) {
+      console.log(error);
+    }
+    console.log(`Server running on http://localhost:${PORT}`);
+  }).on('error', (err) => {
+    console.error('Failed to start server:', err.message);
+  });
+}

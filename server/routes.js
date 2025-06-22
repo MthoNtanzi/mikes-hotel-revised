@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 router.post('/bookings', async (req, res) => {
   const { emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice } = req.body;
 
-  if (!emailAddress || !checkInDate || !checkOutDate ) {
+  if (!emailAddress || !checkInDate || !checkOutDate) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -16,16 +16,20 @@ router.post('/bookings', async (req, res) => {
       'INSERT INTO bookings (emailaddress, checkindate, checkoutdate, numofguests, guestname, roomtype, roomprice, totalprice) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice]
     );
-    
+
     // Setup mail transporter
     let transporter = nodemailer.createTransport({
-      service: 'gmail',
+
+      user: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      port: process.env.EMAIL_PORT || 587,
+      secure: process.env.EMAIL_SECURE === 'true',
       auth: {
-        user: process.env.EMAIL_USER,       // e.g., your Gmail address
-        pass: process.env.EMAIL_PASS        // e.g., your Gmail App Password
-      }
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }        // e.g., your Gmail App Password
+
     });
-    
+
     // Compose email
     let mailOptions = {
       from: `"Mike's Hotel | Reservations" <${process.env.EMAIL_USER}>`,
@@ -41,14 +45,14 @@ router.post('/bookings', async (req, res) => {
       <p>We look forward to your stay!</p>
       `
     };
-    
+
     // Send email
     await transporter.sendMail(mailOptions);
-    
+
     res.status(201).json(result.rows[0]);
   } catch (err) {
     console.error('Database error:', err);
-    res.status(500).json({ message:'Failed to create booking',error: err.message });
+    res.status(500).json({ message: 'Failed to create booking', error: err.message });
   }
 });
 
