@@ -11,6 +11,11 @@
     background-color: #ddd;
 }
 
+.introImg{
+  width: 100%;
+  height: 80vh;
+}
+
 .aboutUsCard{
     width: 60%;
     margin: 0 auto;
@@ -40,6 +45,22 @@
 
 .hover-grow:hover {
   transform: scale(1.1); /* grow 10% */
+}
+
+
+
+/* Hide video on screens smaller than 800px */
+@media (max-width: 800px) {
+    .introVid {
+        display: none;
+    }
+}
+
+/* Hide image on screens larger than 800px */
+@media (min-width: 801px) {
+    .introImg {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 560px) {

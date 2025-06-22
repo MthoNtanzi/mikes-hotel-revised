@@ -1,6 +1,6 @@
 import React from 'react';
 import '../assets/styles/HomePage.css';
-// import introVid from '../assets/videos/intro_video.mp4';
+import introImg from '../assets/images/entrance_img.jpg';
 import introScene from '../assets/videos/intro_scene.mp4';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,11 +22,22 @@ function HomePage() {
     return (
         <div className='main-page'>
 
+
             {/* Intro video */}
             <video className='introVid' autoPlay loop muted playsInline preload="auto">
                 <source src={introScene} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
+
+            {/* Intro Image */}
+            <img
+                src={introImg}
+                alt="Hotel scene"
+                className='introImg'
+                loading="lazy"
+            />
+
+
             <div className='card_and_info'>
                 <div className='card aboutUsCard py-4'>
                     <p className='h3 mb-6'>Comfortable rooms for you!</p>
