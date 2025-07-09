@@ -39,3 +39,21 @@
   color: red;
   margin-top: 1rem;
 }
+
+.actions{
+  background-color: #e4e4e4;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+.actions button{
+  width: 150px;
+}
+
+#qr-canvas{
+  border-radius: 15px;
+}

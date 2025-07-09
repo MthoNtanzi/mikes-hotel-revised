@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -8,17 +8,22 @@ import '../assets/styles/Reservations.css';
 function Reservations() {
 
     const location = useLocation();
+    const [searchParams] = useSearchParams();
     const passedBooking = location.state?.booking;
 
     const [referenceNumber, setReferenceNumber] = useState('');
     const [booking, setBooking] = useState(passedBooking || null);
     const [error, setError] = useState('');
-
+    
     useEffect(() => {
-        if (passedBooking) {
+        const ref = searchParams.get('ref');
+        if (ref) {
+            setReferenceNumber(ref);
+            fetchBookingByRef(ref);
+        } else if (passedBooking) {
             setReferenceNumber(passedBooking.reference_number || '');
         }
-    }, [passedBooking]);
+    }, []);
 
     useEffect(() => {
         if (booking) {
@@ -105,17 +110,19 @@ function Reservations() {
         <>
             <div className="reservations-container">
                 <h2>Find Your Booking</h2>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        className='reservationTextInput'
-                        placeholder="Enter your reference number"
-                        value={referenceNumber}
-                        onChange={(e) => setReferenceNumber(e.target.value)}
-                        required
-                    />
-                    <button type="submit" className='reservationBtn'>Search</button>
-                </form>
+                {!booking && (
+                    <form onSubmit={handleSubmit}>
+                        <input
+                            type="text"
+                            className='reservationTextInput'
+                            placeholder="Enter your reference number"
+                            value={referenceNumber}
+                            onChange={(e) => setReferenceNumber(e.target.value)}
+                            required
+                        />
+                        <button type="submit" className='reservationBtn'>Search</button>
+                    </form>
+                )}
 
                 {error && <p className="error">{error}</p>}
 
@@ -133,10 +140,10 @@ function Reservations() {
                         <p><strong>Reference Number:</strong> {booking.reference_number}</p>
 
                         <div className="actions">
-                            <button onClick={handleDownloadPDF}>Download PDF</button>
-                            <button onClick={handleCancelBooking} className="cancel-btn">Cancel Booking</button>
+                            <button onClick={handleDownloadPDF} class="btn btn-dark me-2 mb-2">Download PDF</button>
+                            <button onClick={handleCancelBooking} className="cancel-btn btn btn-dark mb-2">Cancel Booking</button>
                             <div style={{ marginTop: '1rem' }}>
-                                <p>Scan to view:</p>
+                                <p className='text-center'>Scan to view:</p>
                                 <canvas id="qr-canvas" />
                             </div>
                         </div>

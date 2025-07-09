@@ -44,7 +44,7 @@ router.post('/bookings', async (req, res) => {
       <p><strong>Guests:</strong> ${numOfGuests}</p>
       <p><strong>Total Price:</strong> $${totalPrice}</p>
       <p><strong>Your Booking Reference:</strong> <code>${reference}</code></p>
-      // <p><a href="http://localhost:5173/reservation?ref=${reference}" target="_blank" style="color: blue;">View your booking online</a></p>
+      <p><a href="http://localhost:5173/reservation?ref=${reference}" target="_blank" style="color: blue;">View your booking online</a></p>
       <p>Please keep this reference safe for viewing, modifying, or canceling your booking.</p>
       `
     };
