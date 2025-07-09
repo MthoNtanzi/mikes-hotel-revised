@@ -35,17 +35,34 @@ router.post('/bookings', async (req, res) => {
     let mailOptions = {
       from: `"Mike's Hotel | Reservations" <${process.env.EMAIL_USER}>`,
       to: emailAddress,
-      subject: "Booking Confirmation",
+      subject: `Booking Confirmation for ${guestName}!`,
       html: `
-      <h2">Thank you for your booking, ${guestName}!</h2>
-      <p><strong>Room:</strong> ${roomType}</p>
-      <p><strong>Check-in:</strong> ${checkInDate}</p>
-      <p><strong>Check-out:</strong> ${checkOutDate}</p>
-      <p><strong>Guests:</strong> ${numOfGuests}</p>
-      <p><strong>Total Price:</strong> $${totalPrice}</p>
-      <p><strong>Your Booking Reference:</strong> <code>${reference}</code></p>
-      <p><a href="http://localhost:5173/reservation?ref=${reference}" target="_blank" style="color: blue;">View your booking online</a></p>
-      <p>Please keep this reference safe for viewing, modifying, or canceling your booking.</p>
+      <h1 style="margin: auto; text-align:center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50;">Mikes Hotel</h1>
+      <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <h2 style="color: #2c3e50;">Thank you for your booking, ${guestName}!</h2>
+
+        <p style="margin: 0 0 10px;"><strong>📌 Room:</strong> ${roomType}</p>
+        <p style="margin: 0 0 10px;"><strong>📅 Check-in:</strong> ${checkInDate}</p>
+        <p style="margin: 0 0 10px;"><strong>📅 Check-out:</strong> ${checkOutDate}</p>
+        <p style="margin: 0 0 10px;"><strong>👥 Guests:</strong> ${numOfGuests}</p>
+        <p style="margin: 0 0 10px;"><strong>💰 Total Price:</strong> <span style="color: #27ae60;">$${totalPrice}</span></p>
+
+        <hr style="margin: 20px 0;" />
+
+        <p style="margin: 0 0 10px;"><strong>🔐 Booking Reference:</strong> <code style="background: #f4f4f4; padding: 4px 8px; border-radius: 4px;">${reference}</code></p>
+
+        <p style="margin: 20px 0;">
+          <a href="http://localhost:5173/reservation?ref=${reference}" target="_blank" style="background-color: #2c3e50; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+            🔎 View Your Booking Online
+          </a>
+        </p>
+
+        <p style="font-size: 14px; color: #555;">Please keep this reference safe — you'll need it to view, or cancel your booking.</p>
+
+        <p style="margin-top: 30px; font-size: 12px; color: #999;">
+          If you did not make this booking or believe this message was sent in error, please contact our support team.
+        </p>
+      </div>
       `
     };
 

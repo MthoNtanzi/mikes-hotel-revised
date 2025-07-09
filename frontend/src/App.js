@@ -14,7 +14,9 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <div className="sticky-header">
+        <Header />
+      </div>
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
