@@ -77,6 +77,7 @@ function Booking() {
             const data = await res.json();
 
             if (!res.ok) {
+                console.log("API Error Response:", data);
                 throw new Error(data.message || "Booking failed");
             }
 

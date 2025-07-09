@@ -17,17 +17,18 @@ router.post('/bookings', async (req, res) => {
       [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice]
     );
 
+    const newBooking = result.rows[0]; // contains reference_number
+    const reference = newBooking.reference_number;
+
     // Setup mail transporter
     let transporter = nodemailer.createTransport({
-
-      user: process.env.EMAIL_HOST || 'smtp.gmail.com',
+      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
       port: process.env.EMAIL_PORT || 587,
       secure: process.env.EMAIL_SECURE === 'true',
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }        // e.g., your Gmail App Password
-
+        pass: process.env.EMAIL_PASS,
+      },
     });
 
     // Compose email
@@ -36,13 +37,15 @@ router.post('/bookings', async (req, res) => {
       to: emailAddress,
       subject: "Booking Confirmation",
       html: `
-      <h2>Thank you for your booking, ${guestName}!</h2>
+      <h2">Thank you for your booking, ${guestName}!</h2>
       <p><strong>Room:</strong> ${roomType}</p>
       <p><strong>Check-in:</strong> ${checkInDate}</p>
       <p><strong>Check-out:</strong> ${checkOutDate}</p>
       <p><strong>Guests:</strong> ${numOfGuests}</p>
       <p><strong>Total Price:</strong> $${totalPrice}</p>
-      <p>We look forward to your stay!</p>
+      <p><strong>Your Booking Reference:</strong> <code>${reference}</code></p>
+      // <p><a href="http://localhost:5173/reservation?ref=${reference}" target="_blank" style="color: blue;">View your booking online</a></p>
+      <p>Please keep this reference safe for viewing, modifying, or canceling your booking.</p>
       `
     };
 
