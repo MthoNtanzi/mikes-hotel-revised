@@ -27,7 +27,7 @@ function Reservations() {
 
     useEffect(() => {
         if (booking) {
-            QRCode.toCanvas(document.getElementById('qr-canvas'), `http://localhost:5173/reservations?ref=${booking.reference_number}`, function (error) {
+            QRCode.toCanvas(document.getElementById('qr-canvas'), `https://mikes-hotel-revised.onrender.com/reservations?ref=${booking.reference_number}`, function (error) {
                 if (error) console.error(error);
             });
         }
@@ -35,7 +35,7 @@ function Reservations() {
 
     async function fetchBookingByRef(ref) {
         try {
-            const response = await fetch(`http://localhost:5001/api/bookings/${ref}`);
+            const response = await fetch(`https://mikes-hotel-revised.onrender.com/api/bookings/${ref}`);
             if (!response.ok) {
                 throw new Error(`Booking not found (Status: ${response.status})`);
             }
@@ -90,7 +90,7 @@ function Reservations() {
         if (!confirmDelete) return;
 
         try {
-            const res = await fetch(`http://localhost:5001/api/bookings/${booking.reference_number}`, {
+            const res = await fetch(`https://mikes-hotel-revised.onrender.com/api/bookings/${booking.reference_number}`, {
                 method: 'DELETE',
             });
 

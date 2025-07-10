@@ -52,7 +52,7 @@ router.post('/bookings', async (req, res) => {
         <p style="margin: 0 0 10px;"><strong>🔐 Booking Reference:</strong> <code style="background: #f4f4f4; padding: 4px 8px; border-radius: 4px;">${reference}</code></p>
 
         <p style="margin: 20px 0;">
-          <a href="http://localhost:5173/reservation?ref=${reference}" target="_blank" style="background-color: #2c3e50; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+          <a href="https://mikes-hotel-revised.vercel.app/reservation?ref=${reference}" target="_blank" style="background-color: #2c3e50; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
             🔎 View Your Booking Online
           </a>
         </p>
