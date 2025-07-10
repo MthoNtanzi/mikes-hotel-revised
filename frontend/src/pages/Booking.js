@@ -18,6 +18,7 @@ function Booking() {
     const [email, setEmail] = useState('');
     const [guests, setGuests] = useState(1);
     const [success, setSuccess] = useState(false); // for showing confirmation
+    const [loading, setLoading] = useState(false);
 
     const handleImageClick = (index) => {
         if (index === 0) return; // already in position 1
@@ -64,6 +65,8 @@ function Booking() {
 
 
         try {
+            setLoading(true);
+
             const res = await fetch('https://mikes-hotel-revised.onrender.com/api/bookings', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -101,6 +104,9 @@ function Booking() {
         } catch (err) {
             console.error('Booking error:', err);
             alert(err.message || 'Something went wrong. Please try again.');
+        }
+        finally{
+            setLoading(false);
         }
         // Optional: navigate to a confirmation page
         // navigate("/confirmation", { state: bookingDetails });
@@ -277,7 +283,14 @@ function Booking() {
                             <option value={1}>1 Guest</option>
                             <option value={2}>2 Guests</option>
                         </select>
-                        <button className='btn btn-dark mt-2' onClick={handleBooking}>Book</button>
+                        {loading ? (
+                            <div className="spinner-container">
+                                <div className="spinner"></div>
+                                <p>Processing your booking...</p>
+                            </div>
+                            ) : (
+                            <button onClick={handleBooking} className="booking-btn btn btn-dark mt-2">Book Now</button>
+                            )}
                         {/* Prices calculated by days * roomPrice */}
                         <p>Total for {effectiveNumberOfDays} night stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
