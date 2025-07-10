@@ -79,3 +79,10 @@ async function initDb() {
 }
 
 initDb();
+
+module.exports = initDb;
+
+// Only auto-run if called directly
+if (require.main === module) {
+    initDb();
+}
