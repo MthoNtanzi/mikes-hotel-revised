@@ -19,6 +19,8 @@ function Booking() {
     const [guests, setGuests] = useState(1);
     const [success, setSuccess] = useState(false); // for showing confirmation
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
 
     const handleImageClick = (index) => {
         if (index === 0) return; // already in position 1
@@ -82,7 +84,7 @@ function Booking() {
 
             // Success
             setSuccess(true);
-            alert("Booking successful!");
+            alert("Booking successful!\n\nYour Reference Number will be sent to your email, have a lovely stay!");
 
 
             // Reset form inputs
@@ -101,6 +103,8 @@ function Booking() {
                     key: 'selection'
                 }
             ]);
+
+            navigate("/experiences");
         } catch (err) {
             console.error('Booking error:', err);
             alert(err.message || 'Something went wrong. Please try again.');
