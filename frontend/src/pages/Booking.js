@@ -242,6 +242,7 @@ function Booking() {
                                         moveRangeOnFirstSelection={false}
                                         ranges={selection}
                                         locale={enUS}
+                                        minDate={new Date()} //This prevents past dates from being selected
                                     />
                                 </div>
                             )}
