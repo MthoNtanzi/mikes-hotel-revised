@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import QRCode from 'qrcode';
+import { useRef } from 'react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import '../assets/styles/Reservations.css';
 
-function Reservations() {
+function Reservation() {
 
     const location = useLocation();
     const [searchParams] = useSearchParams();
@@ -14,6 +15,7 @@ function Reservations() {
     const [referenceNumber, setReferenceNumber] = useState('');
     const [booking, setBooking] = useState(passedBooking || null);
     const [error, setError] = useState('');
+    const qrCanvasRef = useRef(null);
     
     useEffect(() => {
         const ref = searchParams.get('ref');
@@ -26,8 +28,10 @@ function Reservations() {
     }, []);
 
     useEffect(() => {
-        if (booking) {
-            QRCode.toCanvas(document.getElementById('qr-canvas'), `https://mikes-hotel-revised.vercel.app/reservation?ref=${ref}`, function (error) {
+        if (booking && qrCanvasRef.current) {
+            const qrUrl = `https://mikes-hotel-revised.vercel.app/reservation?ref=${booking.reference_number}`;
+
+            QRCode.toCanvas(qrCanvasRef.current, qrUrl, function (error) {
                 if (error) console.error(error);
             });
         }
@@ -140,11 +144,11 @@ function Reservations() {
                         <p><strong>Reference Number:</strong> {booking.reference_number}</p>
 
                         <div className="actions">
-                            <button onClick={handleDownloadPDF} class="btn btn-dark me-2 mb-2">Download PDF</button>
+                            <button onClick={handleDownloadPDF} className="btn btn-dark me-2 mb-2">Download PDF</button>
                             <button onClick={handleCancelBooking} className="cancel-btn btn btn-dark mb-2">Cancel Booking</button>
                             <div style={{ marginTop: '1rem' }}>
                                 <p className='text-center'>Scan to view:</p>
-                                <canvas id="qr-canvas" />
+                                <canvas ref={qrCanvasRef} />
                             </div>
                         </div>
 
@@ -157,4 +161,4 @@ function Reservations() {
     );
 }
 
-export default Reservations;
+export default Reservation;

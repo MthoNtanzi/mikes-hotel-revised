@@ -52,8 +52,6 @@ function Booking() {
             totalPrice: room.price * effectiveNumberOfDays
         };
 
-        console.log(payload);
-
         const bookingDetails = {
             room: room.name,
             name: guestName,
@@ -63,8 +61,6 @@ function Booking() {
             endDate: selection[0].endDate,
             totalPrice: room.price * effectiveNumberOfDays,
         };
-
-        console.log("Booking Submitted:", bookingDetails);
 
 
         try {
