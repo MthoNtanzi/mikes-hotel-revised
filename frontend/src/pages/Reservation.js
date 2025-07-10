@@ -27,7 +27,7 @@ function Reservations() {
 
     useEffect(() => {
         if (booking) {
-            QRCode.toCanvas(document.getElementById('qr-canvas'), `https://mikes-hotel-revised.onrender.com/reservations?ref=${booking.reference_number}`, function (error) {
+            QRCode.toCanvas(document.getElementById('qr-canvas'), `https://mikes-hotel-revised.onrender.com/reservation?ref=${booking.reference_number}`, function (error) {
                 if (error) console.error(error);
             });
         }
