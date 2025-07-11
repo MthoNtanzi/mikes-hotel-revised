@@ -16,7 +16,7 @@ function Reservation() {
     const [booking, setBooking] = useState(passedBooking || null);
     const [error, setError] = useState('');
     const qrCanvasRef = useRef(null);
-    
+
     useEffect(() => {
         const ref = searchParams.get('ref');
         if (ref) {
@@ -64,59 +64,70 @@ function Reservation() {
     };
 
     const handleDownloadPDF = async () => {
-    if (!booking) return;
+        if (!booking) return;
 
-    const doc = new jsPDF();
+        const doc = new jsPDF();
+        const qrUrl = `https://mikes-hotel-revised.vercel.app/reservation?ref=${booking.reference_number}`;
 
-    const qrUrl = `https://mikes-hotel-revised.vercel.app/reservation?ref=${booking.reference_number}`;
+        try {
+            // Generate QR code as data URL
+            const qrImageData = await QRCode.toDataURL(qrUrl);
 
-    // Hotel name and title
-    doc.setFontSize(20);
-    doc.setTextColor(40, 40, 40);
-    doc.text("Mike's Hotel", 55, 20);
-    doc.setFontSize(14);
-    doc.text("Booking Confirmation", 55, 30);
+            // Hotel name and title
+            doc.setFontSize(20);
+            doc.setTextColor(40, 40, 40);
+            doc.text("Mike's Hotel", 55, 20);
+            doc.setFontSize(14);
+            doc.text("Booking Confirmation", 55, 30);
 
-    // Horizontal line
-    doc.setDrawColor(100);
-    doc.line(15, 40, 195, 40); // (x1, y1, x2, y2)
+            // Horizontal line
+            doc.setDrawColor(100);
+            doc.line(15, 40, 195, 40);
 
-    // Add QR code top right
-    doc.addImage(qrImageData, 'PNG', 160, 10, 35, 35);
+            // Add QR code to top-right corner
+            doc.addImage(qrImageData, 'PNG', 160, 10, 35, 35);
 
-    // Booking Details Table
-    autoTable(doc, {
-        startY: 50,
-        head: [["Field", "Details"]],
-        body: [
-            ["Guest Name", booking.guestname],
-            ["Email", booking.emailaddress],
-            ["Check-in", new Date(booking.checkindate).toLocaleDateString()],
-            ["Check-out", new Date(booking.checkoutdate).toLocaleDateString()],
-            ["Guests", booking.numofguests],
-            ["Room Type", booking.roomtype],
-            ["Room Price", `ZAR${booking.roomprice}`],
-            ["Total Price", `ZAR${booking.totalprice}`],
-            ["Reference Number", booking.reference_number],
-        ],
-        styles: {
-            fontSize: 12,
-            cellPadding: 4,
-        },
-        headStyles: {
-            fillColor: [60, 60, 60],
-            textColor: [255, 255, 255],
-        },
-        margin: { left: 15, right: 15 },
-    });
+            // Booking Details Table
+            autoTable(doc, {
+                startY: 50,
+                head: [["Field", "Details"]],
+                body: [
+                    ["Guest Name", booking.guestname],
+                    ["Email", booking.emailaddress],
+                    ["Check-in", new Date(booking.checkindate).toLocaleDateString()],
+                    ["Check-out", new Date(booking.checkoutdate).toLocaleDateString()],
+                    ["Guests", booking.numofguests],
+                    ["Room Type", booking.roomtype],
+                    ["Room Price", `ZAR${booking.roomprice}`],
+                    ["Total Price", `ZAR${booking.totalprice}`],
+                    ["Reference Number", booking.reference_number],
+                ],
+                styles: {
+                    fontSize: 12,
+                    cellPadding: 4,
+                },
+                headStyles: {
+                    fillColor: [60, 60, 60],
+                    textColor: [255, 255, 255],
+                },
+                margin: { left: 15, right: 15 },
+            });
 
-    // Footer message
-    doc.setFontSize(10);
-    doc.setTextColor(100);
-    doc.text("Thank you for choosing Mike’s Hotel. We look forward to your stay.", 15, doc.lastAutoTable.finalY + 15);
+            // Footer message
+            doc.setFontSize(10);
+            doc.setTextColor(100);
+            doc.text(
+                "Thank you for choosing Mike’s Hotel. We look forward to your stay.",
+                15,
+                doc.lastAutoTable.finalY + 15
+            );
 
-    doc.save(`booking_${booking.reference_number}.pdf`);
-};
+            doc.save(`booking_${booking.reference_number}.pdf`);
+        } catch (err) {
+            console.error("QR code generation or PDF export failed:", err);
+            alert("Could not generate PDF. Please try again.");
+        }
+    };
 
     const handleCancelBooking = async () => {
         if (!booking) return;
