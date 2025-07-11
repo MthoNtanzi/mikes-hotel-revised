@@ -125,111 +125,111 @@ function Experiences() {
 
                 <div className='p-5'>
                     <div className='booking-form-container'>
-                    <h2>Book an experience</h2>
-                    {isSubmitted ? (
-                        <div className="alert alert-success">
-                            Thank you! Your booking request has been submitted. Show your hotel reference number when you get to the venue to enjoy the experience.
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSubmit} className="booking-form">
-                            <div className="form-group">
-                                <label htmlFor="experience">Select Experience</label>
-                                <select 
-                                    id="experience" 
-                                    name="experience" 
-                                    value={formData.experience}
-                                    onChange={handleChange}
-                                    required
-                                >
-                                    <option value="">-- Choose an experience --</option>
-                                    {experiences.map(exp => (
-                                        <option key={exp.id} value={exp.name}>
-                                            {exp.name} (R{exp.cost})
-                                        </option>
-                                    ))}
-                                </select>
+                        <h2>Book an experience</h2>
+                        {isSubmitted ? (
+                            <div className="alert alert-success">
+                                Thank you! Your booking request has been submitted. Show your hotel reference number when you get to the venue to enjoy the experience.
                             </div>
-
-                            <div className="form-group">
-                                <label htmlFor="name">Full Name</label>
-                                <input 
-                                    type="text" 
-                                    id="name" 
-                                    name="name" 
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="email">Email</label>
-                                <input 
-                                    type="email" 
-                                    id="email" 
-                                    name="email" 
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-group">
-                                <label htmlFor="phone">Phone Number</label>
-                                <input 
-                                    type="tel" 
-                                    id="phone" 
-                                    name="phone" 
-                                    value={formData.phone}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-
-                            <div className="form-row">
+                        ) : (
+                            <form onSubmit={handleSubmit} className="booking-form">
                                 <div className="form-group">
-                                    <label htmlFor="date">Date</label>
-                                    <input 
-                                        type="date" 
-                                        id="date" 
-                                        name="date" 
-                                        value={formData.date}
+                                    <label htmlFor="experience">Select Experience</label>
+                                    <select
+                                        id="experience"
+                                        name="experience"
+                                        value={formData.experience}
+                                        onChange={handleChange}
+                                        required
+                                    >
+                                        <option value="">-- Choose an experience --</option>
+                                        {experiences.map(exp => (
+                                            <option key={exp.id} value={exp.name}>
+                                                {exp.name} (R{exp.cost})
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="name">Full Name</label>
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        name="name"
+                                        value={formData.name}
                                         onChange={handleChange}
                                         required
                                     />
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="guests">Number of Guests</label>
-                                    <input 
-                                        type="number" 
-                                        id="guests" 
-                                        name="guests" 
-                                        min="1"
-                                        value={formData.guests}
+                                    <label htmlFor="email">Email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        value={formData.email}
                                         onChange={handleChange}
                                         required
                                     />
                                 </div>
-                            </div>
 
-                            <div className="form-group">
-                                <label htmlFor="specialRequests">Special Requests</label>
-                                <textarea 
-                                    id="specialRequests" 
-                                    name="specialRequests" 
-                                    rows="3"
-                                    value={formData.specialRequests}
-                                    onChange={handleChange}
-                                />
-                            </div>
+                                <div className="form-group">
+                                    <label htmlFor="phone">Phone Number</label>
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        name="phone"
+                                        value={formData.phone}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
 
-                            <button type="submit" className="btn btn-primary">
-                                Submit Booking Request
-                            </button>
-                        </form>
-                    )}
-                </div>
+                                <div className="form-row">
+                                    <div className="form-group">
+                                        <label htmlFor="date">Date</label>
+                                        <input
+                                            type="date"
+                                            id="date"
+                                            name="date"
+                                            value={formData.date}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="guests">Number of Guests</label>
+                                        <input
+                                            type="number"
+                                            id="guests"
+                                            name="guests"
+                                            min="1"
+                                            value={formData.guests}
+                                            onChange={handleChange}
+                                            required
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="specialRequests">Special Requests</label>
+                                    <textarea
+                                        id="specialRequests"
+                                        name="specialRequests"
+                                        rows="3"
+                                        value={formData.specialRequests}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+
+                                <button type="submit" className="btn btn-primary">
+                                    Submit Booking Request
+                                </button>
+                            </form>
+                        )}
+                    </div>
                 </div>
 
             </div>
