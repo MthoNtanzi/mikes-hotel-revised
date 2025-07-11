@@ -1,6 +1,7 @@
 .App {
   background-color: #faf9f6;
   text-align: center;
+  scroll-behavior: smooth;
 }
 
 .sticky-header {

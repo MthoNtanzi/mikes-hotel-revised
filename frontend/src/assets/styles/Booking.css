@@ -47,6 +47,10 @@
     width: 85vw;
 }
 
+#scroll_images{
+  display: none;
+}
+
 .roomImages {
     display: grid;
     grid-template-columns: 2fr 1fr; /* 2 parts for left, 1 part for right */
@@ -153,12 +157,32 @@
 }
 
   .roomImages {
-      display: flex;
-      flex-direction: column;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
   }
 
   .roomImages img {
-      margin-bottom: 10px;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .roomImages::-webkit-scrollbar {
+    display: none;
+  }
+  .roomImages {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE */
+  }
+
+  #scroll_images{
+    display: block;
   }
 
   .room_desc_amenities_bookings {
@@ -227,16 +251,4 @@
     padding: 8px; /* Adjust next/previous button padding */
   }
 
-  @supports (-webkit-touch-callout: none) {
-      /* Targets WebKit browsers including Huawei */
-      .roomImages {
-          display: flex;
-          flex-direction: column;
-      }
-      
-      .roomImages img {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-  }
 }

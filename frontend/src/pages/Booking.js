@@ -170,12 +170,12 @@ function Booking() {
                             alt={room.name}
                             className={`roomImg${idx + 1}`}
                             onClick={() => handleImageClick(idx)}
-                            // onError={(e) => e.target.src = '/fallback.jpg'} TODO, add a fallback image
                             style={{ cursor: 'pointer' }}
                             loading="lazy"
                         />
                     ))}
                 </div>
+                <p className='text-center text-secondary p-0' id='scroll_images'>Scroll to the right to view more</p>
 
                 {/* Rooms, descriptions, amenities and details */}
                 <div className='room_desc_amenities_bookings'>
@@ -220,14 +220,15 @@ function Booking() {
 
                     {/*  Start of Booking Section */}
                     <div className='card p-1 booking_section'>
-                        <h6 className='display-6'>Details</h6>
+                        <h6 className='display-6'>Booking</h6>
+                        <p>Click the calendar below to book a date</p>
                         <hr />
                         {/* Book Dates */}
                         <div>
                             <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }} role="button" aria-expanded={showCalendar} tabIndex={0}
                                 onKeyDown={(e) => e.key === 'Enter' && setShowCalendar(!showCalendar)}>
-                                <p><FontAwesomeIcon icon={faCalendarDays} /> Dates</p>
-                                <FontAwesomeIcon icon={faChevronDown} />
+                                <p><FontAwesomeIcon icon={faCalendarDays} />Dates <FontAwesomeIcon icon={faChevronDown} /></p>
+                                
                             </div>
 
                             {showCalendar && (
@@ -286,7 +287,7 @@ function Booking() {
                             <button onClick={handleBooking} className="booking-btn btn btn-dark mt-2">Book Now</button>
                             )}
                         {/* Prices calculated by days * roomPrice */}
-                        <p>Total for {effectiveNumberOfDays} night stay: ZAR{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
+                        <p>Total for {effectiveNumberOfDays} night stay: ZAR {(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
                         {/* End of Reserve date */}
 
