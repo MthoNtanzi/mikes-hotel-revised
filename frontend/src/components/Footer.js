@@ -26,7 +26,7 @@ function Footer() {
 
       <div className='bottom_box'>
         <p><Link to="#" className='myLink text-white'>Terms and conditions</Link></p>
-        <p className='text-white'>Copyright Reserved &copy; Made by Mtho</p>
+        <p className='text-white'>Copyright Reserved &copy; Mtho</p>
         <p><Link to="#" className='myLink text-white'>Cookies Policy</Link></p>
       </div>
     </footer>

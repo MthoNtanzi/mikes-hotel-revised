@@ -252,7 +252,7 @@ function Booking() {
                         <hr />
                         <div>
                             <p>Pricing</p>
-                            <p>ZAR{room.price}/night</p>
+                            <p>ZAR {room.price}/night</p>
                         </div>
                         <input
                             type="text"

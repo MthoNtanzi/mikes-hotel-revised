@@ -98,8 +98,8 @@ function Reservation() {
                     ["Check-out", new Date(booking.checkoutdate).toLocaleDateString()],
                     ["Guests", booking.numofguests],
                     ["Room Type", booking.roomtype],
-                    ["Room Price", `ZAR${booking.roomprice}`],
-                    ["Total Price", `ZAR${booking.totalprice}`],
+                    ["Room Price", `ZAR ${booking.roomprice}`],
+                    ["Total Price", `ZAR ${booking.totalprice}`],
                     ["Reference Number", booking.reference_number],
                 ],
                 styles: {

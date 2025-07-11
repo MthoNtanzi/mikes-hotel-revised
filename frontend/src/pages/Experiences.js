@@ -117,7 +117,7 @@ function Experiences() {
                             <h2>{exp.name}</h2>
                             <p>{exp.description}</p>
                             <p><strong>Time:</strong> {exp.times.start} - {exp.times.end}</p>
-                            <p><strong>Cost:</strong> ZAR{exp.cost}</p>
+                            <p><strong>Cost:</strong> ZAR {exp.cost}</p>
                             {exp.duration && <p><strong>Duration:</strong> {exp.duration}</p>}
                         </div>
                     </div>
