@@ -76,9 +76,9 @@ function Reservation() {
             // Hotel name and title
             doc.setFontSize(20);
             doc.setTextColor(40, 40, 40);
-            doc.text("Mike's Hotel", 55, 20);
+            doc.text("Mike's Hotel", 15, 20);
             doc.setFontSize(14);
-            doc.text("Booking Confirmation", 55, 30);
+            doc.text("Booking Confirmation", 15, 30);
 
             // Horizontal line
             doc.setDrawColor(100);
