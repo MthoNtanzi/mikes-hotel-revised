@@ -55,16 +55,6 @@ function Booking() {
             totalPrice: room.price * effectiveNumberOfDays
         };
 
-        const bookingDetails = {
-            room: room.name,
-            name: guestName,
-            email,
-            guests,
-            startDate: selection[0].startDate,
-            endDate: selection[0].endDate,
-            totalPrice: room.price * effectiveNumberOfDays,
-        };
-
 
         try {
             setLoading(true);
@@ -84,7 +74,7 @@ function Booking() {
 
             // Success
             setSuccess(true);
-            alert("Booking successful!\n\nYour Reference Number will be sent to your email, have a lovely stay!");
+            alert("Booking successful!\n\nYour Reference Number will be sent to your email,In the meantime, checkout the experiences we have available. Have a lovely stay!");
 
 
             // Reset form inputs
@@ -262,7 +252,7 @@ function Booking() {
                         <hr />
                         <div>
                             <p>Pricing</p>
-                            <p>R{room.price}/night</p>
+                            <p>ZAR{room.price}/night</p>
                         </div>
                         <input
                             type="text"
@@ -296,7 +286,7 @@ function Booking() {
                             <button onClick={handleBooking} className="booking-btn btn btn-dark mt-2">Book Now</button>
                             )}
                         {/* Prices calculated by days * roomPrice */}
-                        <p>Total for {effectiveNumberOfDays} night stay: R{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
+                        <p>Total for {effectiveNumberOfDays} night stay: ZAR{(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
                         {/* End of Reserve date */}
 

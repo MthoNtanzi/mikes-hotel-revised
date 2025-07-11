@@ -63,30 +63,60 @@ function Reservation() {
         }
     };
 
-    const handleDownloadPDF = () => {
-        if (!booking) return;
+    const handleDownloadPDF = async () => {
+    if (!booking) return;
 
-        const doc = new jsPDF();
-        doc.text("Booking Confirmation", 20, 20);
+    const doc = new jsPDF();
 
-        autoTable(doc, {  // Use autoTable directly
-            startY: 30,
-            head: [["Field", "Value"]],
-            body: [
-                ["Guest Name", booking.guestname],
-                ["Email", booking.emailaddress],
-                ["Check-in", new Date(booking.checkindate).toLocaleDateString()],
-                ["Check-out", new Date(booking.checkoutdate).toLocaleDateString()],
-                ["Guests", booking.numofguests],
-                ["Room Type", booking.roomtype],
-                ["Room Price", `R${booking.roomprice}`],
-                ["Total Price", `R${booking.totalprice}`],
-                ["Reference Number", booking.reference_number],
-            ],
-        });
+    const qrUrl = `https://mikes-hotel-revised.vercel.app/reservation?ref=${booking.reference_number}`;
 
-        doc.save(`booking_${booking.reference_number}.pdf`);
-    };
+    // Hotel name and title
+    doc.setFontSize(20);
+    doc.setTextColor(40, 40, 40);
+    doc.text("Mike's Hotel", 55, 20);
+    doc.setFontSize(14);
+    doc.text("Booking Confirmation", 55, 30);
+
+    // Horizontal line
+    doc.setDrawColor(100);
+    doc.line(15, 40, 195, 40); // (x1, y1, x2, y2)
+
+    // Add QR code top right
+    doc.addImage(qrImageData, 'PNG', 160, 10, 35, 35);
+
+    // Booking Details Table
+    autoTable(doc, {
+        startY: 50,
+        head: [["Field", "Details"]],
+        body: [
+            ["Guest Name", booking.guestname],
+            ["Email", booking.emailaddress],
+            ["Check-in", new Date(booking.checkindate).toLocaleDateString()],
+            ["Check-out", new Date(booking.checkoutdate).toLocaleDateString()],
+            ["Guests", booking.numofguests],
+            ["Room Type", booking.roomtype],
+            ["Room Price", `ZAR${booking.roomprice}`],
+            ["Total Price", `ZAR${booking.totalprice}`],
+            ["Reference Number", booking.reference_number],
+        ],
+        styles: {
+            fontSize: 12,
+            cellPadding: 4,
+        },
+        headStyles: {
+            fillColor: [60, 60, 60],
+            textColor: [255, 255, 255],
+        },
+        margin: { left: 15, right: 15 },
+    });
+
+    // Footer message
+    doc.setFontSize(10);
+    doc.setTextColor(100);
+    doc.text("Thank you for choosing Mike’s Hotel. We look forward to your stay.", 15, doc.lastAutoTable.finalY + 15);
+
+    doc.save(`booking_${booking.reference_number}.pdf`);
+};
 
     const handleCancelBooking = async () => {
         if (!booking) return;

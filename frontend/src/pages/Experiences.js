@@ -117,7 +117,7 @@ function Experiences() {
                             <h2>{exp.name}</h2>
                             <p>{exp.description}</p>
                             <p><strong>Time:</strong> {exp.times.start} - {exp.times.end}</p>
-                            <p><strong>Cost:</strong> R{exp.cost}</p>
+                            <p><strong>Cost:</strong> ZAR{exp.cost}</p>
                             {exp.duration && <p><strong>Duration:</strong> {exp.duration}</p>}
                         </div>
                     </div>
@@ -194,18 +194,6 @@ function Experiences() {
                                         id="date" 
                                         name="date" 
                                         value={formData.date}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="time">Preferred Time</label>
-                                    <input 
-                                        type="time" 
-                                        id="time" 
-                                        name="time" 
-                                        value={formData.time}
                                         onChange={handleChange}
                                         required
                                     />

@@ -45,7 +45,7 @@ router.post('/bookings', async (req, res) => {
         <p style="margin: 0 0 10px;"><strong>📅 Check-in:</strong> ${checkInDate}</p>
         <p style="margin: 0 0 10px;"><strong>📅 Check-out:</strong> ${checkOutDate}</p>
         <p style="margin: 0 0 10px;"><strong>👥 Guests:</strong> ${numOfGuests}</p>
-        <p style="margin: 0 0 10px;"><strong>💰 Total Price:</strong> <span style="color: #27ae60;">$${totalPrice}</span></p>
+        <p style="margin: 0 0 10px;"><strong>💰 Total Price:</strong> <span style="color: #27ae60;">ZAR${totalPrice}</span></p>
 
         <hr style="margin: 20px 0;" />
 
