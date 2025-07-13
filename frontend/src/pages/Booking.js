@@ -228,7 +228,7 @@ function Booking() {
                         <div>
                             <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }} role="button" aria-expanded={showCalendar} tabIndex={0}
                                 onKeyDown={(e) => e.key === 'Enter' && setShowCalendar(!showCalendar)}>
-                                <p><FontAwesomeIcon icon={faCalendarDays} />Dates <FontAwesomeIcon icon={faChevronDown} /></p>
+                                <p><FontAwesomeIcon icon={faCalendarDays} /> Dates <FontAwesomeIcon icon={faChevronDown} /></p>
                                 
                             </div>
 
