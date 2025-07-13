@@ -20,6 +20,7 @@ function Booking() {
     const [success, setSuccess] = useState(false); // for showing confirmation
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
     const handleImageClick = (index) => {
@@ -59,7 +60,7 @@ function Booking() {
         try {
             setLoading(true);
 
-            const res = await fetch('https://mikes-hotel-revised.onrender.com/api/bookings', {
+            const res = await fetch(`${BASE_URL}/bookings`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),

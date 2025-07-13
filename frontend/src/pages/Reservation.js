@@ -11,11 +11,12 @@ function Reservation() {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const passedBooking = location.state?.booking;
-
+    const [loading, setLoading] = useState(false);
     const [referenceNumber, setReferenceNumber] = useState('');
     const [booking, setBooking] = useState(passedBooking || null);
     const [error, setError] = useState('');
     const qrCanvasRef = useRef(null);
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
 
     useEffect(() => {
         const ref = searchParams.get('ref');
@@ -25,7 +26,7 @@ function Reservation() {
         } else if (passedBooking) {
             setReferenceNumber(passedBooking.reference_number || '');
         }
-    }, []);
+    }, [searchParams, passedBooking]);
 
     useEffect(() => {
         if (booking && qrCanvasRef.current) {
@@ -38,10 +39,12 @@ function Reservation() {
     }, [booking]);
 
     async function fetchBookingByRef(ref) {
+        setLoading(true);
         try {
-            const response = await fetch(`https://mikes-hotel-revised.onrender.com/api/bookings/${ref}`);
+            const response = await fetch(`${BASE_URL}/bookings/${ref}`);
             if (!response.ok) {
-                throw new Error(`Booking not found (Status: ${response.status})`);
+                console.log(`Status: ${ response.status }`);
+                throw new Error(`Booking not found`);
             }
             const data = await response.json();
             if (!data || Object.keys(data).length === 0) {
@@ -53,6 +56,8 @@ function Reservation() {
             console.error('Error fetching booking:', err);
             setBooking(null);
             setError(err.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -135,7 +140,7 @@ function Reservation() {
         if (!confirmDelete) return;
 
         try {
-            const res = await fetch(`https://mikes-hotel-revised.onrender.com/api/bookings/${booking.reference_number}`, {
+            const res = await fetch(`${BASE_URL}/bookings/${booking.reference_number}`, {
                 method: 'DELETE',
             });
 
@@ -155,21 +160,36 @@ function Reservation() {
         <>
             <div className="reservations-container">
                 <h2>Find Your Booking</h2>
-                {!booking && (
-                    <form onSubmit={handleSubmit}>
-                        <input
-                            type="text"
-                            className='reservationTextInput'
-                            placeholder="Enter your reference number"
-                            value={referenceNumber}
-                            onChange={(e) => setReferenceNumber(e.target.value)}
-                            required
-                        />
-                        <button type="submit" className='reservationBtn'>Search</button>
-                    </form>
-                )}
+                {loading ? (
+                    <div className="spinner-container">
+                        <div className="spinner"></div>
+                        <p>Fetching your booking...</p>
+                    </div>
+                ) :
+                    !booking && (
+                        <form onSubmit={handleSubmit}>
+                            <input
+                                type="text"
+                                className='reservationTextInput'
+                                placeholder="Enter your reference number"
+                                value={referenceNumber}
+                                onChange={(e) => setReferenceNumber(e.target.value)}
+                                disabled={loading}
+                                required
+                            />
+                            <button type="submit" className='reservationBtn' disabled={loading}>Search</button>
+                        </form>
+                    )}
 
-                {error && <p className="error">{error}</p>}
+                {/* Error handling */}
+                {error && <div className='roomNotFound'>
+                    <div className='big-emoticon'>:(</div>
+                    <h1>{error}</h1>
+                    <div className='content-description'>I couldn't find a booking to match this reference.</div>
+                    <div className='further-explanation'>Please check your email and make sure you have entered the correct Reference</div>
+                    <div className='further-explanation'>Contact support if you can't find your booking!</div>
+                </div>
+                }
 
                 {booking && (
                     <div className="booking-details">

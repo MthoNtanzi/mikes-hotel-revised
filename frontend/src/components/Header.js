@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from "react";
 import '../assets/styles/Header.css';
+import LogoImg from '../assets/images/hotel_logo.png'
 
 function Header() {
 
@@ -23,9 +24,9 @@ function Header() {
     };
 
     return (
-        <header className='navbar navbar-expand-lg navbar-light bg-light'>
+        <header className='navbar navbar-expand-lg navbar-light bg-light py-0'>
             <div className="container-fluid">
-                <Link to="/" className='navbar-brand' onClick={closeNavbar}>Home</Link>
+                <Link to="/" className='navbar-brand' onClick={closeNavbar}><img src={LogoImg} alt="Mike's Hotel Logo" height={60} width={60}/></Link>
                 <button 
                     className="navbar-toggler" 
                     type="button" 
