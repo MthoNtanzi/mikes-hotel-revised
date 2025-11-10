@@ -22,4 +22,4 @@ pool.on('error', (err) => {
   console.error('Unexpected error on idle client', err);
 });
 
-module.exports = pool;
+export default pool;
