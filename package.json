@@ -2,6 +2,7 @@
   "dependencies": {
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
-    "qrcode.react": "^4.2.0"
+    "qrcode.react": "^4.2.0",
+    "resend": "^6.4.2"
   }
 }

@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require('./db');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+
+// Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // POST a new booking
 router.post('/bookings', async (req, res) => {
@@ -12,6 +15,7 @@ router.post('/bookings', async (req, res) => {
   }
 
   try {
+    // Save booking to database
     const result = await db.query(
       'INSERT INTO bookings (emailaddress, checkindate, checkoutdate, numofguests, guestname, roomtype, roomprice, totalprice) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
       [emailAddress, checkInDate, checkOutDate, numOfGuests, guestName, roomType, roomPrice, totalPrice]
@@ -20,23 +24,9 @@ router.post('/bookings', async (req, res) => {
     const newBooking = result.rows[0]; // contains reference_number
     const reference = newBooking.reference_number;
 
-    // Setup mail transporter
-    let transporter = nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-      port: process.env.EMAIL_PORT || 587,
-      secure: process.env.EMAIL_SECURE === 'true',
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
 
     // Compose email
-    let mailOptions = {
-      from: `"Mike's Hotel | Reservations" <${process.env.EMAIL_USER}>`,
-      to: emailAddress,
-      subject: `Booking Confirmation for ${guestName}!`,
-      html: `
+    const html =  `
       <h1 style="margin: auto; text-align:center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50;">Mikes Hotel</h1>
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
         <h2 style="color: #2c3e50;">Thank you for your booking, ${guestName}!</h2>
@@ -63,13 +53,20 @@ router.post('/bookings', async (req, res) => {
           If you did not make this booking or believe this message was sent in error, please contact our support team.
         </p>
       </div>
-      `
-    };
+      `;
 
     // Send email
-    await transporter.sendMail(mailOptions);
+     // 3️⃣ Send confirmation email using Resend
+    await resend.emails.send({
+      
+      from: `Mike's Hotel | Reservations  ${process.env.EMAIL_USER}`,
+      to: emailAddress,
+      subject: `Booking Confirmation for ${guestName}!`,
+      html,
+    });
 
     res.status(201).json(result.rows[0]);
+    
   } catch (err) {
     console.error('Database error:', err);
     res.status(500).json({ message: 'Failed to create booking', error: err.message });
