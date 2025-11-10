@@ -60,7 +60,7 @@ router.post('/bookings', async (req, res) => {
      // 3️⃣ Send confirmation email using Resend
     await resend.emails.send({
       
-      from: `Mike's Hotel | Reservations  ${process.env.EMAIL_USER}`,
+      from: 'Mike\'s Hotel <onboarding@resend.dev>',
       to: emailAddress,
       subject: `Booking Confirmation for ${guestName}!`,
       html,
