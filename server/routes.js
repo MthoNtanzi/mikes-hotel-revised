@@ -66,7 +66,7 @@ router.post('/bookings', async (req, res) => {
     });
 
     res.status(201).json(result.rows[0]);
-    
+
   } catch (err) {
     console.error('Database error:', err);
     res.status(500).json({ message: 'Failed to create booking', error: err.message });
@@ -121,4 +121,4 @@ router.delete('/bookings/:referenceNumber', async (req, res) => {
 });
 
 
-module.exports = router;
+export default router;
