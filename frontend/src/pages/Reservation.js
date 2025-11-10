@@ -26,7 +26,7 @@ function Reservation() {
         } else if (passedBooking) {
             setReferenceNumber(passedBooking.reference_number || '');
         }
-    }, [searchParams, passedBooking]);
+    }, [searchParams, passedBooking, fetchBookingByRef]);
 
     useEffect(() => {
         if (booking && qrCanvasRef.current) {
