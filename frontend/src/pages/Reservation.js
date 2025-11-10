@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import QRCode from 'qrcode';
 import { useRef } from 'react';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import '../assets/styles/Reservations.css';
+import { da } from 'date-fns/locale';
 
 function Reservation() {
 
@@ -17,6 +18,28 @@ function Reservation() {
     const [error, setError] = useState('');
     const qrCanvasRef = useRef(null);
     const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
+    // Wrap fetchBookingByRef in useCallback
+    const fetchBookingByRef = useCallback(async (params) => {
+       setLoading = true;
+       try{
+        const response = await fetch(`${BASE_URL}/bookings/${ref}`);
+        if(!response.ok){
+            console.log(`Status ${response.status}`);
+            throw new Error('No booking found with this reference number.');
+        }
+        setBooking(data);
+        setError('');
+       } catch{
+            console.error('Error fetching booking:', err);
+            setBooking(null);
+            setError(err.message);
+       }finally{
+        setLoading(false);
+       }
+    }, [BASE_URL]);
+
 
     useEffect(() => {
         const ref = searchParams.get('ref');
@@ -38,28 +61,6 @@ function Reservation() {
         }
     }, [booking]);
 
-    async function fetchBookingByRef(ref) {
-        setLoading(true);
-        try {
-            const response = await fetch(`${BASE_URL}/bookings/${ref}`);
-            if (!response.ok) {
-                console.log(`Status: ${ response.status }`);
-                throw new Error(`Booking not found`);
-            }
-            const data = await response.json();
-            if (!data || Object.keys(data).length === 0) {
-                throw new Error('No booking found with this reference number.');
-            }
-            setBooking(data);
-            setError('');
-        } catch (err) {
-            console.error('Error fetching booking:', err);
-            setBooking(null);
-            setError(err.message);
-        } finally {
-            setLoading(false);
-        }
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
