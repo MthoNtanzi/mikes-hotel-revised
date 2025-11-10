@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import pkg from 'pg';
+import routes from './routes.js';
 const { Pool } = pkg;
 
 dotenv.config();
