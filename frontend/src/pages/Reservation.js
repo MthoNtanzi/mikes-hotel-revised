@@ -21,35 +21,43 @@ function Reservation() {
 
 
     // Wrap fetchBookingByRef in useCallback
-    const fetchBookingByRef = useCallback(async (params) => {
-       setLoading = true;
-       try{
-        const response = await fetch(`${BASE_URL}/bookings/${ref}`);
-        if(!response.ok){
-            console.log(`Status ${response.status}`);
-            throw new Error('No booking found with this reference number.');
-        }
-        setBooking(data);
-        setError('');
-       } catch{
+    const fetchBookingByRef = useCallback(async (ref) => {
+        setLoading(true);
+        try {
+            const response = await fetch(`${BASE_URL}/bookings/${ref}`);
+            if (!response.ok) {
+                console.log(`Status: ${response.status}`);
+                throw new Error(`Booking not found`);
+            }
+
+            const data = await response.json(); // 'data' is defined here
+            if (!data || Object.keys(data).length === 0) {
+                throw new Error('No booking found with this reference number.');
+            }
+
+            setBooking(data);
+            setError('');
+        } catch (err) { // 'err' is defined here
             console.error('Error fetching booking:', err);
             setBooking(null);
             setError(err.message);
-       }finally{
-        setLoading(false);
-       }
+        } finally {
+            setLoading(false);
+        }
     }, [BASE_URL]);
 
 
+
     useEffect(() => {
-        const ref = searchParams.get('ref');
-        if (ref) {
-            setReferenceNumber(ref);
-            fetchBookingByRef(ref);
+        const refParam = searchParams.get('ref');
+        if (refParam) {
+            setReferenceNumber(refParam);
+            fetchBookingByRef(refParam);
         } else if (passedBooking) {
             setReferenceNumber(passedBooking.reference_number || '');
         }
     }, [searchParams, passedBooking, fetchBookingByRef]);
+
 
     useEffect(() => {
         if (booking && qrCanvasRef.current) {
