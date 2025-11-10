@@ -1,9 +1,10 @@
+import express from 'express';
+import cors from 'cors';
 import dotenv from 'dotenv';
+import pkg from 'pg';
+const { Pool } = pkg;
 
-const express = require('express');
-const cors = require('cors');
-const routes = require('./routes');
-require('dotenv').config();
+dotenv.config();
 
 const app = express();
 app.use(cors());
@@ -25,7 +26,7 @@ app.get('/', (req, res) => {
 
 // Only listen locally when not in Vercel environment
 if (process.env.VERCEL !== '1') {
-  const PORT = 5001;
+  const PORT = process.env.PORT || 5001;
   app.listen(PORT, (error) => {
     if (error) {
       console.log(error);
@@ -36,4 +37,4 @@ if (process.env.VERCEL !== '1') {
   });
 }
 
-module.exports = app;
+export default app;
