@@ -73,38 +73,15 @@ function Booking() {
                 throw new Error(data.message || "Booking failed");
             }
 
-            // Success
-            setSuccess(true);
-            alert("Booking successful!\n\nYour Reference Number will be sent to your email,In the meantime, checkout the experiences we have available. Have a lovely stay!");
-
-
-            // Reset form inputs
-            setGuestName('');
-            setEmail('');
-            setGuests(1);
-
-            //hide the calendar
-            setShowCalendar(false);
-
-            // Reset calendar selection to today
-            setSelection([
-                {
-                    startDate: new Date(),
-                    endDate: new Date(),
-                    key: 'selection'
-                }
-            ]);
-
-            navigate("/experiences");
+            // On success; navigate straight to reservation page with booking data
+            navigate("/reservation", { state: { booking: data } });
         } catch (err) {
             console.error('Booking error:', err);
             alert(err.message || 'Something went wrong. Please try again.');
         }
-        finally{
+        finally {
             setLoading(false);
         }
-        // Optional: navigate to a confirmation page
-        // navigate("/confirmation", { state: bookingDetails });
     };
 
 
@@ -229,7 +206,7 @@ function Booking() {
                             <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }} role="button" aria-expanded={showCalendar} tabIndex={0}
                                 onKeyDown={(e) => e.key === 'Enter' && setShowCalendar(!showCalendar)}>
                                 <p><FontAwesomeIcon icon={faCalendarDays} /> Dates <FontAwesomeIcon icon={faChevronDown} /></p>
-                                
+
                             </div>
 
                             {showCalendar && (
@@ -284,9 +261,9 @@ function Booking() {
                                 <div className="spinner"></div>
                                 <p>Processing your booking...</p>
                             </div>
-                            ) : (
+                        ) : (
                             <button onClick={handleBooking} className="booking-btn btn btn-dark mt-2">Book Now</button>
-                            )}
+                        )}
                         {/* Prices calculated by days * roomPrice */}
                         <p>Total for {effectiveNumberOfDays} night stay: ZAR {(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
 
