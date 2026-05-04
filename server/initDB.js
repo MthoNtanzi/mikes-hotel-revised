@@ -18,7 +18,9 @@ async function initDb() {
       );
     `);
 
-    // Add the reference_number column if it doesn't exist
+    // Create the trigger function
+    // Pattern: MH-20250504-00042
+    // Date part uses the check-in date; ID is the auto-increment PK — always unique
     await pool.query(`
       CREATE OR REPLACE FUNCTION generate_reference_number()
       RETURNS TRIGGER AS $$
@@ -32,46 +34,18 @@ async function initDb() {
       $$ LANGUAGE plpgsql;
     `);
 
-    // Create the trigger function
+    // Drop and recreate trigger to pick up any function changes
+    await pool.query(`DROP TRIGGER IF EXISTS set_reference_number ON bookings;`);
+
     await pool.query(`
-      CREATE OR REPLACE FUNCTION generate_reference_number()
-      RETURNS TRIGGER AS $$
-      DECLARE
-          room_code TEXT;
-          name_prefix TEXT;
-          stay_length INTEGER;
-      BEGIN
-          room_code := CASE LOWER(NEW.roomtype)
-                          WHEN 'single' THEN '100'
-                          WHEN 'double' THEN '200'
-                          WHEN 'suite' THEN '300'
-                          ELSE '000'
-                       END;
-          name_prefix := UPPER(SUBSTRING(NEW.guestname FROM 1 FOR 3));
-          stay_length := (NEW.checkoutdate - NEW.checkindate);
-            NEW.reference_number := room_code || name_prefix || NEW.numofguests || stay_length::TEXT;
-          RETURN NEW;
-      END;
-      $$ LANGUAGE plpgsql;
+      CREATE TRIGGER set_reference_number
+      BEFORE INSERT ON bookings
+      FOR EACH ROW
+      EXECUTE FUNCTION generate_reference_number();
     `);
 
-    // Create the trigger if not exists
-    await pool.query(`
-      DO $$
-      BEGIN
-        IF NOT EXISTS (
-          SELECT 1 FROM pg_trigger WHERE tgname = 'set_reference_number'
-        ) THEN
-          CREATE TRIGGER set_reference_number
-          BEFORE INSERT ON bookings
-          FOR EACH ROW
-          EXECUTE FUNCTION generate_reference_number();
-        END IF;
-      END$$;
-    `);
-
-    console.log('Database initialized.');
-    process.exit();
+    console.log('Database initialized successfully.');
+    process.exit(0);
   } catch (err) {
     console.error('Database initialization failed:', err);
     process.exit(1);
@@ -79,10 +53,3 @@ async function initDb() {
 }
 
 initDb();
-
-module.exports = initDb;
-
-// Only auto-run if called directly
-if (require.main === module) {
-  initDb();
-}
