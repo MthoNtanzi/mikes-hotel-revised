@@ -17,7 +17,6 @@ function Booking() {
     const [guestName, setGuestName] = useState('');
     const [email, setEmail] = useState('');
     const [guests, setGuests] = useState(1);
-    const [, setSuccess] = useState(false); // for showing confirmation
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const BASE_URL = process.env.REACT_APP_BASE_URL;
