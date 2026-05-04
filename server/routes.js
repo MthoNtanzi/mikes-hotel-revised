@@ -68,14 +68,17 @@ router.post('/bookings', async (req, res) => {
       `;
 
     // Send email
-    transporter.sendMail({
-      from: `"Mike's Hotel" <${process.env.GMAIL_USER}>`,
-      to: emailAddress,
-      subject: `Booking Confirmation – ${reference}`,
-      html,
-    }).catch((err) => {
-      console.error('Email send error:', err.message);
-    });
+    try {
+      await transporter.sendMail({
+        from: `"Mike's Hotel" <${process.env.GMAIL_USER}>`,
+        to: emailAddress,
+        subject: `Booking Confirmation – ${reference}`,
+        html,
+      });
+      console.log(`Email sent to ${emailAddress}`);
+    } catch (emailErr) {
+      console.error('Email send error:', emailErr.message);
+    }
 
     res.status(201).json(newBooking);
 
