@@ -8,16 +8,8 @@ const { Pool } = pkg;
 dotenv.config();
 
 const app = express();
-app.usecors({ origin: 'https://mikes-hotel-revised.vercel.app' });
+app.use(cors({ origin: 'https://mikes-hotel-revised.vercel.app' }));
 app.use(express.json());
-
-app.use((req, res, next) => {
-  res.setHeader(
-    'Content-Security-Policy',
-    "default-src 'self'; font-src 'self'; style-src 'self'; script-src 'self'; img-src 'self';"
-  );
-  next();
-});
 
 app.use('/api', routes);
 
