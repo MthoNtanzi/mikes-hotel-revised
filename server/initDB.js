@@ -1,39 +1,39 @@
-const pool = require('./db');
+import pool from './db.js';
 
 async function initDb() {
-    try {
-        // Create the bookings table if it doesn't exist
-        await pool.query(`
+  try {
+    // Create the bookings table if it doesn't exist
+    await pool.query(`
       CREATE TABLE IF NOT EXISTS bookings (
         id SERIAL PRIMARY KEY,
+        reference_number TEXT UNIQUE,
         emailaddress TEXT NOT NULL,
         checkindate DATE NOT NULL,
         checkoutdate DATE NOT NULL,
         numofguests INTEGER NOT NULL,
         guestname TEXT,
         roomtype TEXT,
-        reference_number TEXT,
         roomprice DECIMAL(10, 2) NOT NULL,
-        totalprice DECIMAL (10, 2) NOT NULL
+        totalprice DECIMAL(10, 2) NOT NULL
       );
     `);
 
-        // Add the reference_number column if it doesn't exist
-        await pool.query(`
-      DO $$
+    // Add the reference_number column if it doesn't exist
+    await pool.query(`
+      CREATE OR REPLACE FUNCTION generate_reference_number()
+      RETURNS TRIGGER AS $$
+      DECLARE
+        date_part TEXT;
       BEGIN
-        IF NOT EXISTS (
-          SELECT 1
-          FROM information_schema.columns
-          WHERE table_name='bookings' AND column_name='reference_number'
-        ) THEN
-          ALTER TABLE bookings ADD COLUMN reference_number TEXT;
-        END IF;
-      END$$;
+        date_part := TO_CHAR(NEW.checkindate, 'YYYYMMDD');
+        NEW.reference_number := 'MH-' || date_part || '-' || LPAD(NEW.id::TEXT, 5, '0');
+        RETURN NEW;
+      END;
+      $$ LANGUAGE plpgsql;
     `);
 
-        // Create the trigger function
-        await pool.query(`
+    // Create the trigger function
+    await pool.query(`
       CREATE OR REPLACE FUNCTION generate_reference_number()
       RETURNS TRIGGER AS $$
       DECLARE
@@ -55,8 +55,8 @@ async function initDb() {
       $$ LANGUAGE plpgsql;
     `);
 
-        // Create the trigger if not exists
-        await pool.query(`
+    // Create the trigger if not exists
+    await pool.query(`
       DO $$
       BEGIN
         IF NOT EXISTS (
@@ -70,12 +70,12 @@ async function initDb() {
       END$$;
     `);
 
-        console.log('Database initialized.');
-        process.exit();
-    } catch (err) {
-        console.error('Database initialization failed:', err);
-        process.exit(1);
-    }
+    console.log('Database initialized.');
+    process.exit();
+  } catch (err) {
+    console.error('Database initialization failed:', err);
+    process.exit(1);
+  }
 }
 
 initDb();
@@ -84,5 +84,5 @@ module.exports = initDb;
 
 // Only auto-run if called directly
 if (require.main === module) {
-    initDb();
+  initDb();
 }
