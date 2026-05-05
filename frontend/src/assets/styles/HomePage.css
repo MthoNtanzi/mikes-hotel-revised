@@ -1,73 +1,126 @@
-.main-img{
-    max-width: 600px;
-    height: auto;
+.main-img {
+  max-width: 600px;
+  height: auto;
 }
 
-.introVid{
-    width: 100%;
-    height: 90vh;
-    object-fit: cover;
-    z-index: -1;
-    background-color: #ddd;
+.introVid {
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+  z-index: -1;
+  background-color: #ddd;
 }
 
-.introImg{
+.introImg {
   width: 100%;
   height: auto;
 }
 
-.aboutUsCard{
-    width: 60%;
-    margin: 0 auto;
-    margin-top: -80px;
-    
-    font-weight: 600;
+.aboutUsCard {
+  width: 60%;
+  margin: 0 auto;
+  margin-top: -80px;
 
-    background-color: #ffffff;
+  font-weight: 600;
 
+  background-color: var(--primary);
+  color: var(--secondary);
 }
 
-.container{
+.book-btn {
+  background: #f5e6c8;
+  color: rgb(119, 43, 43);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-radius: 6px;
+  padding: 7px 16px;
+  margin: auto;
+  width: 50%;
+  outline: none;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.book-btn:hover {
+  background: #fff;
+  color: rgb(95, 32, 32);
+}
+
+.book-btn::after {
+  display: none;
+}
+
+.container {
   height: fit-content;
 }
 
-/* Images */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 2rem 1.5rem;
+}
 
-.image-container {
-  /* Optional: restrict overflow if you want */
+.gallery-item {
+  position: relative;
   overflow: hidden;
+  border-radius: 10px;
+  aspect-ratio: 4/3;
 }
 
-.hover-grow {
-  transition: transform 0.3s ease-in-out;
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
 }
 
-.hover-grow:hover {
-  transform: scale(1.1); /* grow 10% */
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 
 
 /* Hide video on screens smaller than 800px */
 @media (max-width: 800px) {
-    .introVid {
-        display: none;
-    }
+  .introVid {
+    display: none;
+  }
 }
 
 /* Hide image on screens larger than 800px */
 @media (min-width: 801px) {
-    .introImg {
-        display: none;
-    }
+  .introImg {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
+    max-width: 1300px;
+    margin: auto;
+  }
 }
 
 @media only screen and (max-width: 560px) {
-  .introVid{
+  .introVid {
     height: 60vh;
   }
 
-  .aboutUsCard{
+  .aboutUsCard {
     margin-top: -140px;
     margin-bottom: 50px;
     background-color: rgba(144, 158, 174, 0.6);

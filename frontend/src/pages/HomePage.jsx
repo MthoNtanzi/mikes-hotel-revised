@@ -17,8 +17,6 @@ function HomePage() {
 
     ];
 
-    const chunkedImages = [homeImages.slice(0, 3), homeImages.slice(3, 6)]
-
     return (
         <div className='main-page'>
 
@@ -41,7 +39,7 @@ function HomePage() {
             <div className='card_and_info'>
                 <div className='card aboutUsCard py-4'>
                     <p className='h3 mb-6'>Comfortable rooms for you!</p>
-                    <button className='btn btn-outline-dark w-50 mx-auto p-2' onClick={() => navigate('/rooms')}>Check availabilty</button>
+                    <button className='book-btn' onClick={() => navigate('/rooms')}>Check availabilty</button>
                 </div>
                 <div className='px-5'>
                     <h1 className='mt-4'>Stay With Us</h1>
@@ -51,24 +49,16 @@ function HomePage() {
             </div>
 
             {/* lobby and room images */}
-            <div style={{ height: "fit-content" }} className='container'>
-                {chunkedImages.map((row, rowIndex) => (
-                    <div className='row' key={rowIndex}>
-                        {row.map((src, index) => (
-                            <div className="col-lg-4 col-12 mb-4 d-flex justify-content-center image-container" key={index}>
-                                <img
-                                    className='img-fluid rounded hover-grow'
-                                    alt={`Hotel lobby ${rowIndex * 3 + index + 1}`}
-                                    height={200} width={250} src={src}
-                                    loading="lazy"
-                                />
-                            </div>
-                        ))
-                        }
+            <div className="gallery-grid">
+                {homeImages.map((src, index) => (
+                    <div className="gallery-item" key={index}>
+                        <img
+                            src={src}
+                            alt={`Hotel lobby ${index + 1}`}
+                            loading="lazy"
+                        />
                     </div>
-                ))
-                }
-
+                ))}
             </div>
 
 

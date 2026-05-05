@@ -1,6 +1,9 @@
 * {
   margin: 0;
   padding: 0;
+
+  --primary: rgb(119, 43, 43);
+  --secondary: rgba(245, 230, 200, 0.75);
 }
 
 /* :root {} */
