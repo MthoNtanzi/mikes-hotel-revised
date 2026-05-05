@@ -1,20 +1,19 @@
 import { Link } from 'react-router-dom';
-import React from "react";
 import '../assets/styles/Header.css';
 import LogoImg from '../assets/images/hotel_logo.png'
 
 function Header() {
 
-     // Close the navbar when a link is clicked
+    // Close the navbar when a link is clicked
     const closeNavbar = () => {
         const navbarToggler = document.querySelector('.navbar-toggler');
         const navbarCollapse = document.querySelector('.navbar-collapse');
-        
+
         // Only proceed if elements exist (mobile view)
         if (navbarToggler && navbarCollapse) {
             // Check if navbar is currently expanded
             const isExpanded = navbarToggler.getAttribute('aria-expanded') === 'true';
-            
+
             if (isExpanded) {
                 // Close the navbar
                 navbarToggler.setAttribute('aria-expanded', 'false');
@@ -26,14 +25,14 @@ function Header() {
     return (
         <header className='navbar navbar-expand-lg navbar-light bg-light py-0'>
             <div className="container-fluid">
-                <Link to="/" className='navbar-brand' onClick={closeNavbar}><img src={LogoImg} alt="Mike's Hotel Logo" height={60} width={60}/></Link>
-                <button 
-                    className="navbar-toggler" 
-                    type="button" 
-                    data-bs-toggle="collapse" 
-                    data-bs-target="#navbarNavDropdown" 
-                    aria-controls="navbarNavDropdown" 
-                    aria-expanded="false" 
+                <Link to="/" className='navbar-brand' onClick={closeNavbar}><img src={LogoImg} alt="Mike's Hotel Logo" height={60} width={60} /></Link>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown"
+                    aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
                     <span className="navbar-toggler-icon"></span>

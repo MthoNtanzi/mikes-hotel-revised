@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
-import './assets/fontawesome'; 
+import './assets/fontawesome';
 import HomePage from './pages/HomePage';
 import Booking from "./pages/Booking";
 import Rooms from "./pages/Rooms";
@@ -9,11 +9,13 @@ import PNF from "./pages/PNF";
 import Reservation from "./pages/Reservation";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import ScrollToTop from './components/ScrollToTop';
 
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="sticky-header">
         <Header />
       </div>
