@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../assets/styles/Experiences.css';
+import '../assets/styles/global.css';
 
 function Experiences() {
     const experiences = [
@@ -102,7 +103,7 @@ function Experiences() {
     return (
         <>
 
-            <div className='experiencesTitle'>
+            <div className='heroSection experiences'>
                 <h1>Experiences</h1>
                 <p>Mike's Hotel is your home filled with amazing sights and adventures for you. Find joy, rest and enjoy your stay with our loving staff that will make your experience a memorable one.</p>
             </div>

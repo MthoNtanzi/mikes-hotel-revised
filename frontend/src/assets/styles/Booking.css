@@ -1,112 +1,73 @@
-.bookingTitle{
-    background-image: url('https://images.pexels.com/photos/3771110/pexels-photo-3771110.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    min-height: 300px;
-
-    position: relative;
-    display: flex; 
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center; /* Center text horizontally */
-    color: white; /* Ensure text has good contrast with the overlay */
-    overflow: visible;
+.booking {
+  background-image: url('https://images.pexels.com/photos/3771110/pexels-photo-3771110.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
 }
 
-.bookingTitle::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
-    -webkit-background-color: rgba(0, 0, 0, 0.5);
+.roomDetails {
+  margin: 50px auto;
+  width: 85vw;
 }
 
-.bookingTitle > * {
-  position: relative; /* Bring text above the overlay */
-  z-index: 1; /* Ensure text stays on top */
-}
-
-.bookingTitle h1 {
-    margin-top: -50px;
-    margin-bottom: 50px;
-}
-
-.bookingTitle p {
-    max-width: 70%; /* Adjust width as needed */
-}
-
-
-
-.roomDetails{
-    margin: 50px auto;
-    width: 85vw;
-}
-
-#scroll_images{
+#scroll_images {
   display: none;
 }
 
 .roomImages {
-    display: grid;
-    grid-template-columns: 2fr 1fr; /* 2 parts for left, 1 part for right */
-    grid-template-rows: 1fr 1fr;
-    gap: 10px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  /* 2 parts for left, 1 part for right */
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
 
-    img{
-        width: 100%;
-        margin: auto;
-        object-fit: cover;
-        border-radius: 8px;
-    }
+  img {
+    width: 100%;
+    margin: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
 }
 
 .roomImg1 {
-    grid-column: 1 / 2;
-    grid-row: 1 / 3;
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
 }
 
 .roomImg2 {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
 }
 
 .roomImg3 {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
 }
 
-.amenity_list{
-    list-style-type: none;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 20px;
-    padding: 10px 20px;
-    margin: 0;
-    text-align: left;
+.amenity_list {
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 10px 20px;
+  margin: 0;
+  text-align: left;
 }
 
-.room_desc_amenities_bookings{
-    padding-top: 40px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
+.room_desc_amenities_bookings {
+  padding-top: 40px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
 }
 
-.room_desc{
-    flex: 2;
+.room_desc {
+  flex: 2;
 }
 
-.booking_section{
-    flex: 1;
-    align-self: flex-start;
+.booking_section {
+  flex: 1;
+  align-self: flex-start;
 }
 
-.main_heading{
+.main_heading {
   margin-top: 40px;
 }
 
@@ -138,23 +99,30 @@
 
 @media (max-width: 768px) {
   .bookingTitle h1 {
-    font-size: 2em; /* Makes the main title smaller on mobile */
-    margin-top: -30px; /* Adjusts top margin for better spacing */
-    margin-bottom: 30px; /* Adjusts bottom margin for better spacing */
+    font-size: 2em;
+    /* Makes the main title smaller on mobile */
+    margin-top: -30px;
+    /* Adjusts top margin for better spacing */
+    margin-bottom: 30px;
+    /* Adjusts bottom margin for better spacing */
   }
 
   .bookingTitle p {
-    max-width: 90%; /* Allows the paragraph to take up more width */
-    font-size: 0.9em; /* Makes the paragraph text slightly smaller */
+    max-width: 90%;
+    /* Allows the paragraph to take up more width */
+    font-size: 0.9em;
+    /* Makes the paragraph text slightly smaller */
   }
 
- .roomDetails {
+  .roomDetails {
     display: flex;
-    flex-direction: column; /* Ensures stacking behavior */
+    flex-direction: column;
+    /* Ensures stacking behavior */
     align-items: center;
     justify-content: center;
-    width: 95vw; /* Prevents sizing inconsistencies */
-}
+    width: 95vw;
+    /* Prevents sizing inconsistencies */
+  }
 
   .roomImages {
     display: flex;
@@ -176,63 +144,74 @@
   .roomImages::-webkit-scrollbar {
     display: none;
   }
+
   .roomImages {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  #scroll_images{
+  #scroll_images {
     display: block;
   }
 
   .room_desc_amenities_bookings {
-      display: flex;
-      flex-wrap: wrap; /* Allows flexibility across different screen sizes */
-      gap: 10px;
-      align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
   }
 
   .room_desc,
   .booking_section {
-    flex: unset; /* Removes flex shrinking/growing, allowing content to take natural width */
-    width: 100%; /* Makes sure these sections take full width */
+    flex: unset;
+    width: 100%;
   }
 
   .amenity_list {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Adjusts amenity list to fit more items per row */
-    gap: 15px; /* Reduces the gap between amenity items */
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 15px;
   }
+
+
 
   /* Calendar */
 
   .rdrCalendar,
   .rdrDateRangeWrapper {
-    width: 100% !important; /* Make calendar and its wrapper take full width */
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    width: 100% !important;
+    /* Make calendar and its wrapper take full width */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
   }
 
   .rdrDateRangePickerWrapper {
     display: flex;
     justify-content: center;
-    flex-direction: column; /* Stack elements within the picker wrapper */
+    flex-direction: column;
+    /* Stack elements within the picker wrapper */
     align-items: center;
     width: 100%;
   }
 
   .rdrCalendar {
-    max-width: 300px; /* Limit calendar width for very small screens */
-    margin: 0 auto; /* Center the calendar */
+    max-width: 300px;
+    /* Limit calendar width for very small screens */
+    margin: 0 auto;
+    /* Center the calendar */
   }
 
   /* Adjust month display for smaller screens */
   .rdrMonths {
-    flex-direction: column; /* Stack months vertically */
+    flex-direction: column;
+    /* Stack months vertically */
     align-items: center;
   }
 
   .rdrMonth {
-    width: 100%; /* Make each month take full width */
-    margin-bottom: 20px; /* Add space between stacked months */
+    width: 100%;
+    /* Make each month take full width */
+    margin-bottom: 20px;
+    /* Add space between stacked months */
   }
 
   /* Reduce font size for calendar elements if needed */
@@ -244,11 +223,13 @@
 
   /* Further adjustments for the calendar header and controls */
   .rdrPristineButton {
-    padding: 8px; /* Adjust button padding */
+    padding: 8px;
+    /* Adjust button padding */
   }
 
   .rdrNextPrevButton {
-    padding: 8px; /* Adjust next/previous button padding */
+    padding: 8px;
+    /* Adjust next/previous button padding */
   }
 
 }

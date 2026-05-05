@@ -8,6 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { faMugSaucer, faChevronDown, faShirt, faBath, faUtensils, faWifi, faCar, faDumbbell, faSnowflake, faClock, faCircleExclamation, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../assets/styles/Booking.css';
+import '../assets/styles/global.css';
 
 function Booking() {
     const location = useLocation();
@@ -131,7 +132,7 @@ function Booking() {
 
     return (
         <>
-            <div className="bookingTitle">
+            <div className="heroSection booking">
                 <h1>Book your Stay</h1>
                 <p>You have chosen to stay in the {room.name}. View the room offerings and amenities and book your stay.</p>
             </div>
