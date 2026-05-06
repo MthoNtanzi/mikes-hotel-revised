@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import { format, differenceInDays } from 'date-fns';
 import { enUS } from 'date-fns/locale';
-import 'react-date-range/dist/styles.css'; // main css
-import 'react-date-range/dist/theme/default.css'; // theme css
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { faMugSaucer, faChevronDown, faShirt, faBath, faUtensils, faWifi, faCar, faDumbbell, faSnowflake, faClock, faCircleExclamation, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -22,12 +22,9 @@ function Booking() {
     const navigate = useNavigate();
     const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-
     const handleImageClick = (index) => {
-        if (index === 0) return; // already in position 1
-
+        if (index === 0) return;
         const newImages = [...images];
-        // Swap positions between clicked image and first image
         [newImages[0], newImages[index]] = [newImages[index], newImages[0]];
         setImages(newImages);
     };
@@ -38,7 +35,6 @@ function Booking() {
             return;
         }
 
-        //Room type map to make it easier to send room payload to database
         const roomTypeMap = {
             'Single Room': 'single',
             'Double Room': 'double',
@@ -56,57 +52,38 @@ function Booking() {
             totalPrice: room.price * effectiveNumberOfDays
         };
 
-
         try {
             setLoading(true);
-
             const res = await fetch(`${BASE_URL}/bookings`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             });
-
             const data = await res.json();
-
             if (!res.ok) {
                 console.log("API Error Response:", data);
                 throw new Error(data.message || "Booking failed");
             }
-
-            // On success; navigate straight to reservation page with booking data
             navigate("/reservation", { state: { booking: data } });
         } catch (err) {
             console.error('Booking error:', err);
             alert(err.message || 'Something went wrong. Please try again.');
-        }
-        finally {
+        } finally {
             setLoading(false);
         }
     };
 
-
     const [showCalendar, setShowCalendar] = useState(false);
     const [selection, setSelection] = useState([
-        {
-            startDate: new Date(),
-            endDate: new Date(),
-            key: 'selection'
-        }
+        { startDate: new Date(), endDate: new Date(), key: 'selection' }
     ]);
 
-    if (!room) return <>
-        <p>No room data provided.</p>
-    </>;
+    if (!room) return <p>No room data provided.</p>;
 
-    // Calculate the number of days
     const numberOfDays = differenceInDays(selection[0].endDate, selection[0].startDate);
-
-    // Ensure at least 1 day if start and end dates are the same (for single-night stays)
     const effectiveNumberOfDays = numberOfDays === 0 ? 1 : numberOfDays;
 
-    const handleSelect = (ranges) => {
-        setSelection([ranges.selection]);
-    };
+    const handleSelect = (ranges) => setSelection([ranges.selection]);
 
     const amenityLabels = {
         coffeeMaker: "Coffee Maker",
@@ -136,10 +113,9 @@ function Booking() {
                 <h1>Book your Stay</h1>
                 <p>You have chosen to stay in the {room.name}. View the room offerings and amenities and book your stay.</p>
             </div>
-            <h1 className='main_heading'>Bookings</h1>
-            <div className='roomDetails card p-2'>
 
-                {/* Rooms */}
+            <div className='booking-page'>
+                {/* Image Grid */}
                 <div className="roomImages">
                     {images.map((img, idx) => (
                         <img
@@ -155,132 +131,164 @@ function Booking() {
                 </div>
                 <p className='text-center text-secondary p-0' id='scroll_images'>Scroll to the right to view more</p>
 
-                {/* Rooms, descriptions, amenities and details */}
-                <div className='room_desc_amenities_bookings'>
-                    {/* Rooms, descriptions and amenities */}
-                    <div className='room_desc'>
-                        {/* Room and description */}
-                        <div>
+                {/* Main content */}
+                <div className='room-content'>
+
+                    {/* Left: description, amenities, hotel info */}
+                    <div className='room-desc'>
+
+                        <div className='desc-card'>
                             <h1>{room.name}</h1>
                             <p>{room.description}</p>
                         </div>
 
-                        {/* Amenities */}
-                        <div className='card my-3'>
-                            <h4 className='card-title pt-3 display-6'>Amenities</h4>
+                        <div className='desc-card'>
+                            <h4>Amenities</h4>
                             <hr />
-                            <ul className="list-none pl-0 space-y-2 amenity_list">
+                            <div className='amenity-grid'>
                                 {Object.entries(room.amenities)
                                     .filter(([_, count]) => count > 0)
                                     .map(([amenity, count]) => (
-                                        <li key={amenity} className="flex items-center gap-2">
-                                            <FontAwesomeIcon icon={amenityIcons[amenity]} className="text-blue-600" />
-                                            <span> {amenityLabels[amenity] || amenity}</span>
-                                            <span className="text-sm text-gray-600 font-semibold">: {count}</span>
-                                        </li>
+                                        <div key={amenity} className='amenity-item'>
+                                            <FontAwesomeIcon icon={amenityIcons[amenity]} className='amenity-icon' />
+                                            <span>{amenityLabels[amenity] || amenity}</span>
+                                            <span className='amenity-count'>x{count}</span>
+                                        </div>
                                     ))}
-                            </ul>
-                        </div>
-                        {/* Hotel information */}
-                        <div className="card my-3">
-                            <h4 className='card-title pt-3 display-6'>Hotel Information</h4>
-                            <hr />
-                            <div className='d-flex flex-row justify-content-center gap-4 flex-wrap text-center'>
-                                <p><FontAwesomeIcon icon={faClock} /> Check In : 3:00 pm</p>
-                                <p><FontAwesomeIcon icon={faClock} /> Check Out : 10:00 am</p>
-                                <p><FontAwesomeIcon icon={faCircleExclamation} /> Minimum Age to Check In : 18</p>
                             </div>
+                        </div>
 
-
+                        <div className='desc-card'>
+                            <h4>Hotel Information</h4>
+                            <hr />
+                            <div className='hotel-info-grid'>
+                                <div className='info-item'>
+                                    <FontAwesomeIcon icon={faClock} className='info-icon' />
+                                    <span>Check-in: 3:00 pm</span>
+                                </div>
+                                <div className='info-item'>
+                                    <FontAwesomeIcon icon={faClock} className='info-icon' />
+                                    <span>Check-out: 10:00 am</span>
+                                </div>
+                                <div className='info-item'>
+                                    <FontAwesomeIcon icon={faCircleExclamation} className='info-icon' />
+                                    <span>Min. age to check in: 18</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    {/* End of Rooms, descriptions and amenities */}
 
-                    {/*  Start of Booking Section */}
-                    <div className='card p-1 booking_section'>
-                        <h6 className='display-6'>Booking</h6>
-                        <p>Click the calendar below to book a date</p>
-                        <hr />
-                        {/* Book Dates */}
-                        <div>
-                            <div onClick={() => setShowCalendar(!showCalendar)} style={{ cursor: 'pointer' }} role="button" aria-expanded={showCalendar} tabIndex={0}
-                                onKeyDown={(e) => e.key === 'Enter' && setShowCalendar(!showCalendar)}>
-                                <p><FontAwesomeIcon icon={faCalendarDays} /> Dates <FontAwesomeIcon icon={faChevronDown} /></p>
-
+                    {/* Right: booking panel */}
+                    <div className='booking-panel'>
+                        <div className='booking-card'>
+                            <div className='booking-card-header'>
+                                <h3>Reserve This Room</h3>
+                                <p>Select your dates and complete your booking</p>
                             </div>
 
-                            {showCalendar && (
-                                <div className='mb-3'>
-                                    <DateRange
-                                        editableDateInputs={true}
-                                        onChange={handleSelect}
-                                        moveRangeOnFirstSelection={false}
-                                        ranges={selection}
-                                        locale={enUS}
-                                        minDate={new Date()} //This prevents past dates from being selected
+                            <div className='booking-card-body'>
+                                {/* Date toggle */}
+                                <div
+                                    onClick={() => setShowCalendar(!showCalendar)}
+                                    style={{ cursor: 'pointer' }}
+                                    role="button"
+                                    aria-expanded={showCalendar}
+                                    tabIndex={0}
+                                    onKeyDown={(e) => e.key === 'Enter' && setShowCalendar(!showCalendar)}
+                                >
+                                    <div className={`date-toggle ${showCalendar ? 'open' : ''}`}>
+                                        <span className='date-toggle-left'>
+                                            <FontAwesomeIcon icon={faCalendarDays} />
+                                            <span>Select Dates</span>
+                                        </span>
+                                        <FontAwesomeIcon icon={faChevronDown} className='date-toggle-chevron' />
+                                    </div>
+                                </div>
+
+                                {showCalendar && (
+                                    <div className='mb-3'>
+                                        <DateRange
+                                            editableDateInputs={true}
+                                            onChange={handleSelect}
+                                            moveRangeOnFirstSelection={false}
+                                            ranges={selection}
+                                            locale={enUS}
+                                            minDate={new Date()}
+                                        />
+                                    </div>
+                                )}
+
+                                {/* Date display */}
+                                <div className='date-display'>
+                                    <div className='date-field'>
+                                        <label>Arrival</label>
+                                        <span>{format(selection[0].startDate, 'MMM dd, yyyy')}</span>
+                                    </div>
+                                    <div className='date-field'>
+                                        <label>Departure</label>
+                                        <span>{format(selection[0].endDate, 'MMM dd, yyyy')}</span>
+                                    </div>
+                                </div>
+
+                                {/* Form fields */}
+                                <div className='form-field'>
+                                    <label>Your Name</label>
+                                    <input
+                                        type="text"
+                                        placeholder="John Doe"
+                                        value={guestName}
+                                        onChange={(e) => setGuestName(e.target.value)}
                                     />
                                 </div>
-                            )}
 
-                            <div className='text-muted'>
-                                <p><strong>Arrival:</strong> {format(selection[0].startDate, 'MMM dd, yyyy')}</p>
-                                <p><strong>Departure:</strong> {format(selection[0].endDate, 'MMM dd, yyyy')}</p>
+                                <div className='form-field'>
+                                    <label>Email Address</label>
+                                    <input
+                                        type="email"
+                                        placeholder="john@example.com"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+
+                                <div className='form-field'>
+                                    <label>Guests</label>
+                                    <select
+                                        value={guests}
+                                        onChange={(e) => setGuests(Number(e.target.value))}
+                                    >
+                                        <option value={1}>1 Guest</option>
+                                        <option value={2}>2 Guests</option>
+                                    </select>
+                                </div>
+
+                                <div className='pricing-row'>
+                                    <span>ZAR {room.price.toLocaleString('en-ZA')} / night</span>
+                                    <strong>{effectiveNumberOfDays} {effectiveNumberOfDays === 1 ? 'night' : 'nights'}</strong>
+                                </div>
+                            </div>
+
+                            <div className='booking-card-footer'>
+                                <div className='total-line'>
+                                    <span>Total</span>
+                                    <strong>ZAR {(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</strong>
+                                </div>
+                                {loading ? (
+                                    <div className="spinner-container">
+                                        <div className="spinner"></div>
+                                        <p>Processing your booking...</p>
+                                    </div>
+                                ) : (
+                                    <button onClick={handleBooking} className="btn-book">Book Now</button>
+                                )}
                             </div>
                         </div>
-                        {/* Reserve date */}
-                        <hr />
-                        <div>
-                            <p>Pricing</p>
-                            <p>ZAR {room.price}/night</p>
-                        </div>
-                        <input
-                            type="text"
-                            placeholder="Your Name"
-                            className="form-control mb-2"
-                            value={guestName}
-                            onChange={(e) => setGuestName(e.target.value)}
-                        />
-                        <input
-                            type="email"
-                            placeholder="Email Address"
-                            className="form-control mb-2"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-
-                        <select
-                            className="form-control mb-2"
-                            value={guests}
-                            onChange={(e) => setGuests(Number(e.target.value))}
-                        >
-                            <option value={1}>1 Guest</option>
-                            <option value={2}>2 Guests</option>
-                        </select>
-                        {loading ? (
-                            <div className="spinner-container">
-                                <div className="spinner"></div>
-                                <p>Processing your booking...</p>
-                            </div>
-                        ) : (
-                            <button onClick={handleBooking} className="booking-btn btn btn-dark mt-2">Book Now</button>
-                        )}
-                        {/* Prices calculated by days * roomPrice */}
-                        <p>Total for {effectiveNumberOfDays} night stay: ZAR {(room.price * effectiveNumberOfDays).toLocaleString('en-ZA')}</p>
-
-                        {/* End of Reserve date */}
-
                     </div>
 
-                    {/*  End of Booking Section */}
                 </div>
-
-                {/* End of Rooms, descriptions, amenities and details */}
-
             </div>
         </>
     );
 }
 
 export default Booking;
-
-// Insipiration: https://dribbble.com/shots/25716741-Serenity-Hotel-Booking-Details-Page

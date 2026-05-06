@@ -2,19 +2,20 @@
   background-image: url('https://images.pexels.com/photos/3771110/pexels-photo-3771110.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
 }
 
-.roomDetails {
-  margin: 50px auto;
-  width: 85vw;
+.booking-page {
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 3rem;
 }
 
 #scroll_images {
   display: none;
 }
 
+/* Image grid */
 .roomImages {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  /* 2 parts for left, 1 part for right */
   grid-template-rows: 1fr 1fr;
   gap: 10px;
 
@@ -41,50 +42,326 @@
   grid-row: 2 / 3;
 }
 
-.amenity_list {
-  list-style-type: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-  padding: 10px 20px;
-  margin: 0;
-  text-align: left;
-}
-
-.room_desc_amenities_bookings {
-  padding-top: 40px;
+/* Layout */
+.room-content {
   display: flex;
-  gap: 10px;
+  gap: 24px;
+  margin-top: 28px;
   align-items: flex-start;
 }
 
-.room_desc {
+.room-desc {
   flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.booking_section {
+.booking-panel {
   flex: 1;
-  align-self: flex-start;
+  position: sticky;
+  top: 80px;
 }
 
-.main_heading {
-  margin-top: 40px;
+/* Description cards */
+.desc-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
 }
 
-/* Huawei-specific fixes */
+.desc-card h1 {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+.desc-card p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+}
+
+.desc-card h4 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  margin-bottom: 14px;
+}
+
+.desc-card hr {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  margin: 0 0 16px;
+}
+
+/* Amenities */
+.amenity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.amenity-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #444;
+  background: #fafafa;
+  border: 0.5px solid #eee;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.amenity-icon {
+  color: rgb(119, 43, 43);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.amenity-count {
+  margin-left: auto;
+  font-size: 12px;
+  color: #aaa;
+  font-weight: 500;
+}
+
+/* Hotel info */
+.hotel-info-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+  background: #fafafa;
+  border: 0.5px solid #eee;
+  border-radius: 8px;
+  padding: 8px 14px;
+}
+
+.info-icon {
+  color: rgb(119, 43, 43);
+  flex-shrink: 0;
+}
+
+/* Booking card */
+.booking-card {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.booking-card-header {
+  background: rgb(119, 43, 43);
+  padding: 1.25rem 1.5rem;
+  color: #f5e6c8;
+}
+
+.booking-card-header h3 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.booking-card-header p {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-top: 3px;
+}
+
+.booking-card-body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Date toggle */
+.date-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: rgb(119, 43, 43);
+  color: #f5e6c8;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.date-toggle:hover {
+  background: rgb(95, 32, 32);
+}
+
+.date-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-toggle-chevron {
+  transition: transform 0.25s ease;
+}
+
+.date-toggle.open .date-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+/* Date display */
+.date-display {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.date-field label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  font-weight: 600;
+}
+
+.date-field span {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+}
+
+/* Form fields */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-field label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  font-weight: 600;
+}
+
+.form-field input,
+.form-field select {
+  padding: 10px 12px;
+  border: 1.5px solid #eee;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background: #fafafa;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  font-family: inherit;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: rgb(119, 43, 43);
+  background: #fff;
+}
+
+/* Pricing */
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid #f0f0f0;
+  font-size: 13px;
+  color: #666;
+}
+
+.pricing-row strong {
+  color: #1a1a1a;
+  font-size: 14px;
+}
+
+/* Footer */
+.booking-card-footer {
+  padding: 1rem 1.5rem;
+  background: #fafafa;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: #666;
+}
+
+.total-line strong {
+  font-size: 1.1rem;
+  color: rgb(119, 43, 43);
+  font-weight: 600;
+}
+
+.btn-book {
+  width: 100%;
+  background: rgb(119, 43, 43);
+  color: #f5e6c8;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn-book:hover {
+  background: rgb(95, 32, 32);
+}
+
+.btn-book:active {
+  transform: scale(0.98);
+}
+
+/* Spinner */
 .spinner-container {
   text-align: center;
-  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #888;
 }
 
 .spinner {
-  border: 4px solid #ccc;
-  border-top: 4px solid #333;
+  border: 3px solid #f0f0f0;
+  border-top: 3px solid rgb(119, 43, 43);
   border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  animation: spin 0.9s linear infinite;
-  margin: auto;
+  width: 32px;
+  height: 32px;
+  animation: spin 0.8s linear infinite;
 }
 
 @keyframes spin {
@@ -93,35 +370,20 @@
   }
 }
 
-
-
-/* Responsiveness */
-
+/* Responsive */
 @media (max-width: 768px) {
-  .bookingTitle h1 {
-    font-size: 2em;
-    /* Makes the main title smaller on mobile */
-    margin-top: -30px;
-    /* Adjusts top margin for better spacing */
-    margin-bottom: 30px;
-    /* Adjusts bottom margin for better spacing */
-  }
-
-  .bookingTitle p {
-    max-width: 90%;
-    /* Allows the paragraph to take up more width */
-    font-size: 0.9em;
-    /* Makes the paragraph text slightly smaller */
-  }
-
-  .roomDetails {
-    display: flex;
+  .room-content {
     flex-direction: column;
-    /* Ensures stacking behavior */
-    align-items: center;
-    justify-content: center;
-    width: 95vw;
-    /* Prevents sizing inconsistencies */
+  }
+
+  .booking-panel {
+    position: static;
+    width: 100%;
+  }
+
+  .room-desc,
+  .booking-panel {
+    width: 100%;
   }
 
   .roomImages {
@@ -154,82 +416,42 @@
     display: block;
   }
 
-  .room_desc_amenities_bookings {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .room_desc,
-  .booking_section {
-    flex: unset;
-    width: 100%;
-  }
-
-  .amenity_list {
+  .amenity-grid {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 15px;
   }
-
-
-
-  /* Calendar */
 
   .rdrCalendar,
   .rdrDateRangeWrapper {
     width: 100% !important;
-    /* Make calendar and its wrapper take full width */
     box-sizing: border-box;
-    /* Include padding and border in the element's total width and height */
   }
 
   .rdrDateRangePickerWrapper {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    /* Stack elements within the picker wrapper */
     align-items: center;
     width: 100%;
   }
 
   .rdrCalendar {
     max-width: 300px;
-    /* Limit calendar width for very small screens */
     margin: 0 auto;
-    /* Center the calendar */
   }
 
-  /* Adjust month display for smaller screens */
   .rdrMonths {
     flex-direction: column;
-    /* Stack months vertically */
     align-items: center;
   }
 
   .rdrMonth {
     width: 100%;
-    /* Make each month take full width */
     margin-bottom: 20px;
-    /* Add space between stacked months */
   }
 
-  /* Reduce font size for calendar elements if needed */
   .rdrDay,
   .rdrWeekDay,
   .rdrMonthName {
     font-size: 0.9em;
   }
-
-  /* Further adjustments for the calendar header and controls */
-  .rdrPristineButton {
-    padding: 8px;
-    /* Adjust button padding */
-  }
-
-  .rdrNextPrevButton {
-    padding: 8px;
-    /* Adjust next/previous button padding */
-  }
-
 }
