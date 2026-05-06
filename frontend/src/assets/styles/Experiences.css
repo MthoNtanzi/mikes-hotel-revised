@@ -1,163 +1,288 @@
 .experiences {
     background-image: url('https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+    position: relative;
 }
 
-/* ==== Main ==== */
+.experiences::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.experiences h1,
+.experiences p {
+    position: relative;
+    z-index: 1;
+}
+
+.main-heading {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 48px 0 16px;
+    color: #1a1a1a;
+}
 
 .experiencesMain {
-    margin: auto;
     max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1.5rem 3rem;
 }
 
-/* === Main === */
-
-/* .experiencesMain{
-
-} */
-
-.image_and_text {
-    margin: 25px;
+/* Experience rows */
+.exp-row {
     display: flex;
     flex-direction: column;
+    gap: 24px;
+    padding: 40px 0;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.08);
 }
 
-.experience_image img {
+.exp-row:last-of-type {
+    border-bottom: none;
+}
+
+.exp-img {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+}
+
+.exp-img img {
     width: 100%;
-    max-width: 500px;
-    height: auto;
-    border-radius: 15px;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
 }
 
-.experience_text * {
-    margin-bottom: 25px;
+.exp-row:hover .exp-img img {
+    transform: scale(1.03);
 }
 
-.experience_text>h2 {
-    margin-top: 25px;
-}
-
-.main_heading {
-    margin-block: 40px;
-}
-
-
-/* ===   Booking Form   === */
-
-/* Booking Form Styles */
-.booking-form-container {
-    background-color: #f8f9fa;
-    padding: 2rem;
-    border-radius: 8px;
-    margin-top: 2rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.booking-form {
+.exp-text {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 12px;
 }
 
-.booking-form .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.booking-form .form-group label {
+.exp-text h2 {
+    font-size: 1.1rem;
     font-weight: 600;
+    color: rgb(119, 43, 43);
+    letter-spacing: 0.04em;
+}
+
+.exp-text p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+}
+
+.exp-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.exp-badge {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #f5e6c8;
+    color: rgb(119, 43, 43);
+    font-weight: 500;
+}
+
+/* Form */
+.form-section {
+    margin-top: 48px;
+}
+
+.form-section>h2 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-section>h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.booking-form-container {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+    background: rgb(119, 43, 43);
+    padding: 1.5rem 2rem;
+    color: #f5e6c8;
+}
+
+.form-header h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+}
+
+.form-header p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 4px;
+    line-height: 1.5;
+}
+
+.form-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 11px 14px;
+    border: 1.5px solid #eee;
+    border-radius: 8px;
+    font-size: 14px;
     color: #333;
+    background: #fafafa;
+    transition: border-color 0.2s, background 0.2s;
+    outline: none;
+    font-family: inherit;
 }
 
-.booking-form .form-group input,
-.booking-form .form-group select,
-.booking-form .form-group textarea {
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: rgb(119, 43, 43);
+    background: #fff;
 }
 
-.booking-form .form-group textarea {
+.form-group textarea {
     resize: vertical;
-    min-height: 100px;
+    min-height: 90px;
+}
+
+.form-divider {
+    height: 1px;
+    background: #f0f0f0;
 }
 
 .form-row {
     display: flex;
-    gap: 1rem;
+    gap: 16px;
 }
 
 .form-row .form-group {
     flex: 1;
 }
 
-.booking-form .btn-primary {
-    background-color: #007bff;
-    color: white;
-    padding: 0.75rem 1.5rem;
+.form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: #fafafa;
+    border-top: 1px solid #f0f0f0;
+}
+
+.form-footer p {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.btn-submit {
+    background: rgb(119, 43, 43);
+    color: #f5e6c8;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
+    padding: 11px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s;
+    transition: background 0.2s, transform 0.1s;
 }
 
-.booking-form .btn-primary:hover {
-    background-color: #0056b3;
+.btn-submit:hover {
+    background: rgb(95, 32, 32);
 }
 
-.booking-form .alert {
-    padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+.btn-submit:active {
+    transform: scale(0.98);
 }
 
-.booking-form .alert-success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+.success-banner {
+    background: #f0faf4;
+    border: 1px solid #b7dfca;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    color: #1a5c38;
+    font-size: 14px;
+    line-height: 1.6;
 }
 
-@media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-        gap: 1rem;
-    }
-}
-
-
-
-@media screen and (min-width: 800px) {
-    .experiencesMain {
-        margin-top: 50px;
-        text-align: left;
-        padding-inline: 20px;
-    }
-
-    .main_heading {
-        margin-top: 40px;
-    }
-
-    .image_and_text {
-        margin: 140px auto;
+@media (min-width: 800px) {
+    .exp-row {
         flex-direction: row;
-        gap: 20px;
+        align-items: center;
+        gap: 48px;
     }
 
-    .image_and_text:nth-child(2n) {
+    .exp-row:nth-child(even) {
         flex-direction: row-reverse;
     }
 
-    .experience_text>h2 {
-        margin-top: 0;
-    }
-
-    .experience_image {
+    .exp-img {
         flex: 1;
     }
 
-    .experience_text {
+    .exp-text {
         flex: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+
+    .btn-submit {
+        width: 100%;
+        text-align: center;
     }
 }

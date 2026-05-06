@@ -100,7 +100,10 @@ function Rooms() {
                             <div className='roomCard-body'>
                                 <p className='roomCard-name'>{room.name}</p>
                                 <button
-                                    onClick={() => handleViewRoom(room)}
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleViewRoom(room);
+                                    }}
                                     className='btn-view-room'
                                     aria-label={`View details for ${room.name}`}
                                 >

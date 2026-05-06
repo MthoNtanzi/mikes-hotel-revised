@@ -14,7 +14,7 @@ function Experiences() {
             cost: 600,
             currency: "ZAR",
             duration: "45 mins",
-            description: "Our Spa reflects the environment that surrounds it - are you ready for the ultimate relaxation. Our spa opens up on to an outdoor pool and private garden.",
+            description: "Our Spa reflects the environment that surrounds it, are you ready for the ultimate relaxation. Our spa opens up on to an outdoor pool and private garden.",
             image: "https://cdn.pixabay.com/photo/2023/10/28/11/21/ai-generated-8347190_1280.png"
         },
         {
@@ -72,15 +72,11 @@ function Experiences() {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you would typically send the data to your backend
         setIsSubmitted(true);
         // Reset form after submission
         setFormData({
@@ -94,10 +90,7 @@ function Experiences() {
             specialRequests: ''
         });
 
-        // Hide success message after 5 seconds
-        setTimeout(() => {
-            setIsSubmitted(false);
-        }, 5000);
+        setTimeout(() => setIsSubmitted(false), 5000);
     };
 
     return (
@@ -110,124 +103,89 @@ function Experiences() {
             <h1 className='main_heading'>Experiences near Mike's Hotel</h1>
             <div className='experiencesMain'>
                 {experiences.map((exp) => (
-                    <div className='image_and_text' key={exp.id}>
-                        <div className='experience_image'>
+                    <div className='exp-row' key={exp.id}>
+                        <div className='exp-img'>
                             <img src={exp.image} alt={exp.name} loading="lazy" />
                         </div>
-                        <div className='experience_text'>
+                        <div className='exp-text'>
                             <h2>{exp.name}</h2>
                             <p>{exp.description}</p>
-                            <p><strong>Time:</strong> {exp.times.start} - {exp.times.end}</p>
-                            <p><strong>Cost:</strong> ZAR {exp.cost}</p>
-                            {exp.duration && <p><strong>Duration:</strong> {exp.duration}</p>}
+                            <div className='exp-meta'>
+                                <span className='exp-badge'>{exp.times.start} – {exp.times.end}</span>
+                                <span className='exp-badge'>ZAR {exp.cost}</span>
+                                {exp.duration && <span className='exp-badge'>{exp.duration}</span>}
+                            </div>
                         </div>
                     </div>
                 ))}
 
-                <div className='p-5'>
+                {/* Booking Form */}
+                <div className='form-section'>
+                    <h2>Book an Experience</h2>
                     <div className='booking-form-container'>
-                        <h2>Book an experience</h2>
+                        <div className='form-header'>
+                            <h3>Reserve Your Spot</h3>
+                            <p>Fill in the details below and we'll confirm your booking. Show your hotel reference number at the venue.</p>
+                        </div>
+
                         {isSubmitted ? (
-                            <div className="alert alert-success">
-                                Thank you! Your booking request has been submitted. Show your hotel reference number when you get to the venue to enjoy the experience.
+                            <div className='form-body'>
+                                <div className='success-banner'>
+                                    Thank you! Your booking request has been submitted. Show your hotel reference number when you get to the venue to enjoy the experience.
+                                </div>
                             </div>
                         ) : (
-                            <form onSubmit={handleSubmit} className="booking-form">
-                                <div className="form-group">
-                                    <label htmlFor="experience">Select Experience</label>
-                                    <select
-                                        id="experience"
-                                        name="experience"
-                                        value={formData.experience}
-                                        onChange={handleChange}
-                                        required
-                                    >
-                                        <option value="">-- Choose an experience --</option>
-                                        {experiences.map(exp => (
-                                            <option key={exp.id} value={exp.name}>
-                                                {exp.name} (R{exp.cost})
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="name">Full Name</label>
-                                    <input
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="email">Email</label>
-                                    <input
-                                        type="email"
-                                        id="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-group">
-                                    <label htmlFor="phone">Phone Number</label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-
-                                <div className="form-row">
-                                    <div className="form-group">
-                                        <label htmlFor="date">Date</label>
-                                        <input
-                                            type="date"
-                                            id="date"
-                                            name="date"
-                                            value={formData.date}
-                                            onChange={handleChange}
-                                            required
-                                        />
+                            <form onSubmit={handleSubmit}>
+                                <div className='form-body'>
+                                    <div className='form-group'>
+                                        <label htmlFor='experience'>Experience</label>
+                                        <select id='experience' name='experience' value={formData.experience} onChange={handleChange} required>
+                                            <option value=''>— Choose an experience —</option>
+                                            {experiences.map(exp => (
+                                                <option key={exp.id} value={exp.name}>{exp.name} (R{exp.cost})</option>
+                                            ))}
+                                        </select>
                                     </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="guests">Number of Guests</label>
-                                        <input
-                                            type="number"
-                                            id="guests"
-                                            name="guests"
-                                            min="1"
-                                            value={formData.guests}
-                                            onChange={handleChange}
-                                            required
-                                        />
+                                    <div className='form-divider'></div>
+
+                                    <div className='form-row'>
+                                        <div className='form-group'>
+                                            <label htmlFor='name'>Full Name</label>
+                                            <input type='text' id='name' name='name' value={formData.name} onChange={handleChange} placeholder='John Doe' required />
+                                        </div>
+                                        <div className='form-group'>
+                                            <label htmlFor='email'>Email</label>
+                                            <input type='email' id='email' name='email' value={formData.email} onChange={handleChange} placeholder='john@example.com' required />
+                                        </div>
+                                    </div>
+
+                                    <div className='form-row'>
+                                        <div className='form-group'>
+                                            <label htmlFor='phone'>Phone Number</label>
+                                            <input type='tel' id='phone' name='phone' value={formData.phone} onChange={handleChange} placeholder='+27 00 000 0000' required />
+                                        </div>
+                                        <div className='form-group'>
+                                            <label htmlFor='guests'>Number of Guests</label>
+                                            <input type='number' id='guests' name='guests' min='1' value={formData.guests} onChange={handleChange} required />
+                                        </div>
+                                    </div>
+
+                                    <div className='form-group'>
+                                        <label htmlFor='date'>Date</label>
+                                        <input type='date' id='date' name='date' value={formData.date} onChange={handleChange} required />
+                                    </div>
+
+                                    <div className='form-group'>
+                                        <label htmlFor='specialRequests'>Special Requests</label>
+                                        <textarea id='specialRequests' name='specialRequests' rows='3' value={formData.specialRequests} onChange={handleChange} placeholder='Any dietary requirements, accessibility needs, or other requests...' />
                                     </div>
                                 </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="specialRequests">Special Requests</label>
-                                    <textarea
-                                        id="specialRequests"
-                                        name="specialRequests"
-                                        rows="3"
-                                        value={formData.specialRequests}
-                                        onChange={handleChange}
-                                    />
+                                <div className='form-footer'>
+                                    <p>You won't be charged yet</p>
+                                    <button type='submit' className='btn-submit'>Submit Booking Request</button>
                                 </div>
-
-                                <button type="submit" className="btn btn-primary">
-                                    Submit Booking Request
-                                </button>
                             </form>
                         )}
                     </div>

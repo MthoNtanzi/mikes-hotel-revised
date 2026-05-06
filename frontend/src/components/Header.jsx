@@ -32,7 +32,6 @@ function Header() {
                     <li><Link to="/rooms" className={isActive('/rooms') ? 'active' : ''}>Rooms</Link></li>
                     <li><Link to="/experiences" className={isActive('/experiences') ? 'active' : ''}>Experiences</Link></li>
                     <li><Link to="/reservation" className={isActive('/reservation') ? 'active' : ''}>View booking</Link></li>
-                    <li><Link to="/booking" className="nav-book-btn">Book now</Link></li>
                 </ul>
 
                 <button
@@ -48,7 +47,6 @@ function Header() {
                 <Link to="/rooms" className={isActive('/rooms') ? 'active' : ''}>Rooms</Link>
                 <Link to="/experiences" className={isActive('/experiences') ? 'active' : ''}>Experiences</Link>
                 <Link to="/reservation" className={isActive('/reservation') ? 'active' : ''}>View booking</Link>
-                <Link to="/booking">Book now</Link>
             </div>
         </header>
     );

@@ -82,26 +82,6 @@
     border-radius: 2px;
 }
 
-.nav-book-btn {
-    background: #f5e6c8 !important;
-    color: rgb(119, 43, 43) !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.04em !important;
-    border-radius: 6px !important;
-    padding: 7px 16px !important;
-    margin-left: 6px;
-    transition: background 0.2s, color 0.2s !important;
-}
-
-.nav-book-btn:hover {
-    background: #fff !important;
-    color: rgb(95, 32, 32) !important;
-}
-
-.nav-book-btn::after {
-    display: none !important;
-}
-
 /* Hamburger toggle */
 .nav-toggle {
     display: none;
