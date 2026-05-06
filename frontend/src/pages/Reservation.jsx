@@ -18,25 +18,16 @@ function Reservation() {
     const qrCanvasRef = useRef(null);
     const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-    // Wrap fetchBookingByRef in useCallback to prevent re-creation on every render
     const fetchBookingByRef = useCallback(async (ref) => {
         setLoading(true);
-        setError(''); // Clear previous errors
+        setError('');
         try {
             const response = await fetch(`${BASE_URL}/bookings/${ref}`);
-            if (!response.ok) {
-                console.log(`Status: ${response.status}`);
-                throw new Error('Booking not found');
-            }
-
+            if (!response.ok) throw new Error('Booking not found');
             const data = await response.json();
-            if (!data || Object.keys(data).length === 0) {
-                throw new Error('No booking found with this reference number.');
-            }
-
+            if (!data || Object.keys(data).length === 0) throw new Error('No booking found with this reference number.');
             setBooking(data);
         } catch (err) {
-            console.error('Error fetching booking:', err);
             setBooking(null);
             setError(err.message);
         } finally {
@@ -44,7 +35,6 @@ function Reservation() {
         }
     }, [BASE_URL]);
 
-    // Fetch booking if ref is in query or passed via state
     useEffect(() => {
         const refParam = searchParams.get('ref');
         if (refParam) {
@@ -55,7 +45,6 @@ function Reservation() {
         }
     }, [searchParams, passedBooking, fetchBookingByRef]);
 
-    // Generate QR code when booking is available
     useEffect(() => {
         if (booking && qrCanvasRef.current) {
             const qrUrl = `https://mikes-hotel-revised.vercel.app/reservation?ref=${booking.reference_number}`;
@@ -67,31 +56,23 @@ function Reservation() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (referenceNumber.trim()) {
-            fetchBookingByRef(referenceNumber.trim());
-        }
+        if (referenceNumber.trim()) fetchBookingByRef(referenceNumber.trim());
     };
 
     const handleDownloadPDF = async () => {
         if (!booking) return;
-
         const doc = new jsPDF();
         const qrUrl = `https://mikes-hotel-revised.vercel.app/reservation?ref=${booking.reference_number}`;
-
         try {
             const qrImageData = await QRCode.toDataURL(qrUrl);
-
             doc.setFontSize(20);
             doc.setTextColor(40, 40, 40);
             doc.text("Mike's Hotel", 15, 20);
             doc.setFontSize(14);
             doc.text("Booking Confirmation", 15, 30);
-
             doc.setDrawColor(100);
             doc.line(15, 40, 195, 40);
-
             doc.addImage(qrImageData, 'PNG', 160, 10, 35, 35);
-
             autoTable(doc, {
                 startY: 50,
                 head: [["Field", "Details"]],
@@ -107,10 +88,9 @@ function Reservation() {
                     ["Reference Number", booking.reference_number],
                 ],
                 styles: { fontSize: 12, cellPadding: 4 },
-                headStyles: { fillColor: [60, 60, 60], textColor: [255, 255, 255] },
+                headStyles: { fillColor: [119, 43, 43], textColor: [245, 230, 200] },
                 margin: { left: 15, right: 15 },
             });
-
             doc.setFontSize(10);
             doc.setTextColor(100);
             doc.text(
@@ -118,10 +98,9 @@ function Reservation() {
                 15,
                 doc.lastAutoTable.finalY + 15
             );
-
             doc.save(`booking_${booking.reference_number}.pdf`);
         } catch (err) {
-            console.error("QR code generation or PDF export failed:", err);
+            console.error("PDF export failed:", err);
             alert("Could not generate PDF. Please try again.");
         }
     };
@@ -130,15 +109,10 @@ function Reservation() {
         if (!booking) return;
         const confirmDelete = window.confirm("Are you sure you want to cancel this booking?");
         if (!confirmDelete) return;
-
         try {
-            const res = await fetch(`${BASE_URL}/bookings/${booking.reference_number}`, {
-                method: 'DELETE',
-            });
-
+            const res = await fetch(`${BASE_URL}/bookings/${booking.reference_number}`, { method: 'DELETE' });
             const data = await res.json();
             if (!res.ok) throw new Error(data.message || "Failed to cancel booking");
-
             alert("Booking cancelled successfully.");
             setBooking(null);
             setReferenceNumber('');
@@ -151,54 +125,96 @@ function Reservation() {
     return (
         <div className="reservations-container">
             <h2>Find Your Booking</h2>
-            {loading ? (
+
+            {loading && (
                 <div className="spinner-container">
                     <div className="spinner"></div>
                     <p>Fetching your booking...</p>
                 </div>
-            ) : !booking && (
-                <form onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        className='reservationTextInput'
-                        placeholder="Enter your reference number"
-                        value={referenceNumber}
-                        onChange={(e) => setReferenceNumber(e.target.value)}
-                        disabled={loading}
-                        required
-                    />
-                    <button type="submit" className='reservationBtn' disabled={loading}>Search</button>
+            )}
+
+            {!loading && !booking && (
+                <form onSubmit={handleSubmit} className="search-form">
+                    <div className="search-form-header">
+                        <h3>View Your Reservation</h3>
+                        <p>Enter the reference number from your confirmation email to view or manage your booking.</p>
+                    </div>
+                    <div className="search-form-body">
+                        <input
+                            type="text"
+                            placeholder="e.g. MH-20250504-00042"
+                            value={referenceNumber}
+                            onChange={(e) => setReferenceNumber(e.target.value)}
+                            disabled={loading}
+                            required
+                        />
+                        <button type="submit" className="btn-search" disabled={loading}>Search</button>
+                    </div>
                 </form>
             )}
 
-            {error && <div className='roomNotFound'>
-                <div className='big-emoticon'>:(</div>
-                <h1>{error}</h1>
-                <div className='content-description'>I couldn't find a booking to match this reference.</div>
-                <div className='further-explanation'>Please check your email and make sure you have entered the correct Reference</div>
-                <div className='further-explanation'>Contact support if you can't find your booking!</div>
-            </div>}
+            {error && (
+                <div className="roomNotFound">
+                    <div className="big-emoticon">:(</div>
+                    <h1>{error}</h1>
+                    <p className="content-description">I couldn't find a booking to match this reference.</p>
+                    <p className="further-explanation">Please check your email and make sure you entered the correct reference number.</p>
+                    <p className="further-explanation">Contact support if you can't find your booking.</p>
+                </div>
+            )}
 
             {booking && (
-                <div className="booking-details">
-                    <h3>Booking Details</h3>
-                    <p><strong>Guest Name:</strong> {booking.guestname}</p>
-                    <p><strong>Email:</strong> {booking.emailaddress}</p>
-                    <p><strong>Check-in:</strong> {new Date(booking.checkindate).toLocaleDateString()}</p>
-                    <p><strong>Check-out:</strong> {new Date(booking.checkoutdate).toLocaleDateString()}</p>
-                    <p><strong>Guests:</strong> {booking.numofguests}</p>
-                    <p><strong>Room Type:</strong> {booking.roomtype}</p>
-                    <p><strong>Room Price:</strong> R{booking.roomprice}</p>
-                    <p><strong>Total Price:</strong> R{booking.totalprice}</p>
-                    <p><strong>Reference Number:</strong> {booking.reference_number}</p>
-
-                    <div className="actions">
-                        <button onClick={handleDownloadPDF} className="btn btn-dark me-2 mb-2">Download PDF</button>
-                        <button onClick={handleCancelBooking} className="cancel-btn btn btn-dark mb-2">Cancel Booking</button>
-                        <div style={{ marginTop: '1rem' }}>
-                            <p className='text-center'>Scan to view:</p>
-                            <canvas ref={qrCanvasRef} />
+                <div className="booking-card">
+                    <div className="booking-card-header">
+                        <div>
+                            <h3>Booking Confirmed</h3>
+                            <p>Welcome back, {booking.guestname}</p>
                         </div>
+                        <span className="booking-ref">{booking.reference_number}</span>
+                    </div>
+
+                    <div className="booking-card-body">
+                        <div className="booking-grid">
+                            <div className="booking-field">
+                                <label>Check-in</label>
+                                <span>{new Date(booking.checkindate).toLocaleDateString()}</span>
+                            </div>
+                            <div className="booking-field">
+                                <label>Check-out</label>
+                                <span>{new Date(booking.checkoutdate).toLocaleDateString()}</span>
+                            </div>
+                            <div className="booking-field">
+                                <label>Room Type</label>
+                                <span>{booking.roomtype}</span>
+                            </div>
+                            <div className="booking-field">
+                                <label>Guests</label>
+                                <span>{booking.numofguests}</span>
+                            </div>
+                            <div className="booking-field">
+                                <label>Email</label>
+                                <span>{booking.emailaddress}</span>
+                            </div>
+                            <div className="booking-field">
+                                <label>Room Price</label>
+                                <span>ZAR {booking.roomprice}</span>
+                            </div>
+                        </div>
+
+                        <div className="booking-total">
+                            <label>Total Amount</label>
+                            <span>ZAR {booking.totalprice}</span>
+                        </div>
+
+                        <div className="booking-qr">
+                            <canvas ref={qrCanvasRef} />
+                            <p>Scan to view booking online</p>
+                        </div>
+                    </div>
+
+                    <div className="booking-card-footer">
+                        <button onClick={handleDownloadPDF} className="btn-download">Download PDF</button>
+                        <button onClick={handleCancelBooking} className="btn-cancel">Cancel Booking</button>
                     </div>
                 </div>
             )}
