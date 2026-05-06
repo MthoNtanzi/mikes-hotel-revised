@@ -81,35 +81,35 @@ function Rooms() {
         <>
             <div className="heroSection roomsContainer">
                 <h1>Explore Our Offers</h1>
-                <p>At Mike's hotel we pride ourselves by having the best rooms for you and your loved ones. Whether you here for business or pleasure we have you covered, so browse over our offerings below and come visit us when you are ready, we'll be waiting for you!</p>
+                <p>At Mike's hotel we pride ourselves by having the best rooms for you and your loved ones. Whether you're here for business or pleasure we have you covered — browse our offerings below and come visit us when you're ready!</p>
             </div>
-            {/* Rooms */}
+
             <div className='roomView'>
-                <h1 className='h1'>Book Your Room Today</h1>
+                <h1>Book Your Room Today</h1>
                 <div className='rooms'>
                     {roomsArray.map((room, index) => (
-                        <div key={index} className='roomCard rounded card p-1'>
-                            <img
-                                src={room.images[0]}
-                                alt={room.name}
-                                className='img-fluid rounded'
-                                loading="lazy"
-                            />
-                            <p>{room.name}</p>
-                            <button
-                                onClick={() => handleViewRoom(room)}
-                                className='btn btn-secondary rounded-5'
-                                aria-label={`View details for ${room.name}`}
-                            >
-                                View Room
-                            </button>
+                        <div key={index} className='roomCard' onClick={() => handleViewRoom(room)}>
+                            <div className='roomCard-img-wrap'>
+                                <img
+                                    src={room.images[0]}
+                                    alt={room.name}
+                                    className='roomCard-img'
+                                    loading="lazy"
+                                />
+                            </div>
+                            <div className='roomCard-body'>
+                                <p className='roomCard-name'>{room.name}</p>
+                                <button
+                                    onClick={() => handleViewRoom(room)}
+                                    className='btn-view-room'
+                                    aria-label={`View details for ${room.name}`}
+                                >
+                                    View Room
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
-
-
-
-
             </div>
         </>
     )
