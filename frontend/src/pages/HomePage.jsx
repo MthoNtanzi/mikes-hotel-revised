@@ -8,12 +8,12 @@ function HomePage() {
     const navigate = useNavigate();
 
     const homeImages = [
-        `https://plus.unsplash.com/premium_photo-1661929519129-7a76946c1d38?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
-        `https://plus.unsplash.com/premium_photo-1661907977530-eb64ddbfb88a?q=80&w=2121&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
-        `https://images.unsplash.com/photo-1625244695851-1fc873f942bc?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
-        `https://plus.unsplash.com/premium_photo-1675615667752-2ccda7042e7e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
-        `https://plus.unsplash.com/premium_photo-1675615667609-9470809c201c?q=80&w=2098&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
-        `https://plus.unsplash.com/premium_photo-1675615949706-d241c824a3a8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`,
+        `https://cdn.pixabay.com/photo/2013/09/25/12/26/entrance-hall-186099_1280.jpg`,
+        `https://cdn.pixabay.com/photo/2019/08/19/13/58/bed-4416515_1280.jpg`,
+        `https://cdn.pixabay.com/photo/2017/08/16/09/45/victoria-falls-2646993_1280.jpg`,
+        `https://cdn.pixabay.com/photo/2017/07/31/21/14/architecture-2561129_1280.jpg`,
+        `https://cdn.pixabay.com/photo/2017/06/09/09/28/swimming-pool-2386258_1280.jpg`,
+        `https://cdn.pixabay.com/photo/2017/03/10/10/07/bathroom-2132342_1280.jpg`,
 
     ];
 
